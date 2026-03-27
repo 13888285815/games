@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黄金矿工 - 意念科技游戏世界</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/game.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../scripts/languages.js" defer></script>
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- 游戏头部 -->
+        <header class="game-header">
+            <div class="container">
+                <h1><i class="fas fa-coins"></i> 黄金矿工</h1>
+                <div class="game-meta">
+                    <span class="game-rating">⭐ 4.7</span>
+                    <span class="game-players">👥 876,543 玩家</span>
+                    <span class="game-category">休闲</span>
+                </div>
+                <nav class="game-nav">
+                    <a href="../index.html" class="btn-back">
+                        <i class="fas fa-home"></i> 返回首页
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- 游戏主区域 -->
+        <main class="game-main">
+            <div class="container">
+                <div class="game-layout">
+                    <!-- 游戏区域 -->
+                    <div class="game-area">
+                        <div class="game-canvas-container">
+                            <canvas id="gameCanvas" width="800" height="600"></canvas>
+                            <div class="game-overlay" id="gameOverlay">
+                                <h2>黄金矿工</h2>
+                                <p>抓住黄金和宝石，赚取足够金钱！</p>
+                                <button id="startGameBtn" class="btn-play-large">
+                                    <i class="fas fa-play"></i> 开始游戏
+                                </button>
+                                <div class="game-instructions">
+                                    <h3>游戏说明</h3>
+                                    <ul>
+                                        <li>控制矿工抓住黄金和宝石</li>
+                                        <li>在规定时间内赚取足够金钱</li>
+                                        <li>购买道具增强能力</li>
+                                        <li>挑战更高难度关卡</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 游戏控制面板 -->
+                    <div class="game-panel">
+                        <div class="game-stats">
+                            <h3>游戏统计</h3>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <span class="stat-label">当前关卡</span>
+                                    <span class="stat-value" id="currentLevel">1</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">当前金钱</span>
+                                    <span class="stat-value" id="currentMoney">¥0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">目标金钱</span>
+                                    <span class="stat-value" id="targetMoney">¥500</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">剩余时间</span>
+                                    <span class="stat-value" id="remainingTime">60s</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">当前分数</span>
+                                    <span class="stat-value" id="currentScore">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">最高分</span>
+                                    <span class="stat-value" id="highScore">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="game-controls">
+                            <h3>游戏控制</h3>
+                            <div class="controls-grid">
+                                <button id="dropHookBtn" class="btn-control">
+                                    <i class="fas fa-arrow-down"></i> 放下钩子
+                                </button>
+                                <button id="speedUpBtn" class="btn-control">
+                                    <i class="fas fa-tachometer-alt"></i> 加速
+                                </button>
+                                <button id="buyPowerBtn" class="btn-control">
+                                    <i class="fas fa-bolt"></i> 购买力量
+                                </button>
+                                <button id="buyTimeBtn" class="btn-control">
+                                    <i class="fas fa-clock"></i> 购买时间
+                                </button>
+                                <button id="restartBtn" class="btn-control">
+                                    <i class="fas fa-redo"></i> 重新开始
+                                </button>
+                                <button id="pauseBtn" class="btn-control">
+                                    <i class="fas fa-pause"></i> 暂停
+                                </button>
+                            </div>
+
+                            <div class="powerups-section">
+                                <h4>道具商店</h4>
+                                <div class="powerups-grid">
+                                    <div class="powerup-item">
+                                        <i class="fas fa-gem"></i>
+                                        <span>钻石：¥100</span>
+                                    </div>
+                                    <div class="powerup-item">
+                                        <i class="fas fa-bomb"></i>
+                                        <span>炸药：¥150</span>
+                                    </div>
+                                    <div class="powerup-item">
+                                        <i class="fas fa-magnet"></i>
+                                        <span>磁铁：¥200</span>
+                                    </div>
+                                    <div class="powerup-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>时间：¥250</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="game-help">
+                            <h3>游戏帮助</h3>
+                            <div class="help-content">
+                                <h4>游戏规则：</h4>
+                                <ul>
+                                    <li>点击"放下钩子"按钮抓取物品</li>
+                                    <li>黄金价值较高，宝石价值最高</li>
+                                    <li>岩石价值较低，尽量不要抓</li>
+                                    <li>在规定时间内达到目标金钱即可过关</li>
+                                    <li>使用道具可以增强矿工能力</li>
+                                </ul>
+                                
+                                <h4>操作说明：</h4>
+                                <ul>
+                                    <li>点击按钮或按空格键放下钩子</li>
+                                    <li>使用键盘方向键调整钩子方向</li>
+                                    <li>点击道具按钮购买增强能力</li>
+                                    <li>收集足够的金钱进入下一关</li>
+                                </ul>
+                                
+                                <h4>技巧提示：</h4>
+                                <ul>
+                                    <li>优先抓取大块黄金</li>
+                                    <li>炸药可以炸开岩石</li>
+                                    <li>磁铁可以吸引附近物品</li>
+                                    <li>时间道具可以延长游戏时间</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 游戏说明区域 -->
+        <section class="game-info">
+            <div class="container">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> 游戏介绍</h3>
+                        <p>《黄金矿工》是一款经典的休闲游戏，玩家需要控制矿工在有限的时间内抓取地下洞穴中的黄金、宝石和宝藏，赚取足够的金钱过关。游戏简单有趣，考验玩家的反应速度和策略选择。</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-trophy"></i> 游戏特色</h3>
+                        <ul>
+                            <li>简单易上手的操作方式</li>
+                            <li>丰富的道具系统</li>
+                            <li>多种关卡和难度</li>
+                            <li>支持高分排行榜</li>
+                            <li>适合所有年龄段玩家</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-gamepad"></i> 控制方式</h3>
+                        <ul>
+                            <li>鼠标/触摸点击按钮控制</li>
+                            <li>键盘空格键放下钩子</li>
+                            <li>方向键调整钩子方向</li>
+                            <li>支持移动设备触摸控制</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏成就 -->
+        <section class="game-achievements">
+            <div class="container">
+                <h2><i class="fas fa-medal"></i> 游戏成就</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-item">
+                        <i class="fas fa-coins"></i>
+                        <h3>新手矿工</h3>
+                        <p>完成第1关</p>
+                    </div>
+                    <div class="achievement-item">
+                        <i class="fas fa-gem"></i>
+                        <h3>宝石猎人</h3>
+                        <p>抓取100颗宝石</p>
+                    </div>
+                    <div class="achievement-item">
+                        <i class="fas fa-trophy"></i>
+                        <h3>黄金大师</h3>
+                        <p>赚取¥10,000</p>
+                    </div>
+                    <div class="achievement-item">
+                        <i class="fas fa-crown"></i>
+                        <h3>矿工之王</h3>
+                        <p>完成所有关卡</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 游戏脚本 -->
+    <script>
+        // 游戏状态
+        const gameState = {
+            isPlaying: false,
+            currentLevel: 1,
+            currentMoney: 0,
+            targetMoney: 500,
+            remainingTime: 60,
+            score: 0,
+            highScore: localStorage.getItem('goldMinerHighScore') || 0
+        };
+
+        // DOM元素
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const startGameBtn = document.getElementById('startGameBtn');
+        const gameOverlay = document.getElementById('gameOverlay');
+        const dropHookBtn = document.getElementById('dropHookBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+
+        // 更新UI显示
+        function updateUI() {
+            document.getElementById('currentLevel').textContent = gameState.currentLevel;
+            document.getElementById('currentMoney').textContent = `¥${gameState.currentMoney}`;
+            document.getElementById('targetMoney').textContent = `¥${gameState.targetMoney}`;
+            document.getElementById('remainingTime').textContent = `${gameState.remainingTime}s`;
+            document.getElementById('currentScore').textContent = gameState.score;
+            document.getElementById('highScore').textContent = gameState.highScore;
+        }
+
+        // 初始化游戏
+        function initGame() {
+            updateUI();
+            
+            // 绘制初始游戏画面
+            drawGame();
+        }
+
+        // 绘制游戏画面
+        function drawGame() {
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制背景
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制矿工
+            drawMiner();
+            
+            // 绘制钩子
+            drawHook();
+            
+            // 绘制物品
+            drawItems();
+            
+            // 绘制UI
+            drawGameUI();
+        }
+
+        function drawMiner() {
+            // 绘制矿工
+            ctx.fillStyle = '#ffcc00';
+            ctx.beginPath();
+            ctx.arc(400, 100, 30, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 矿工眼睛
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(390, 90, 5, 0, Math.PI * 2);
+            ctx.arc(410, 90, 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 矿工帽子
+            ctx.fillStyle = '#8b4513';
+            ctx.fillRect(370, 70, 60, 20);
+        }
+
+        function drawHook() {
+            // 绘制钩子线
+            ctx.strokeStyle = '#cccccc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(400, 100);
+            ctx.lineTo(400, 300);
+            ctx.stroke();
+            
+            // 绘制钩子
+            ctx.fillStyle = '#666666';
+            ctx.beginPath();
+            ctx.arc(400, 300, 15, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawItems() {
+            // 绘制黄金
+            ctx.fillStyle = '#ffd700';
+            ctx.fillRect(200, 400, 40, 20);
+            ctx.fillRect(600, 450, 60, 30);
+            
+            // 绘制宝石
+            ctx.fillStyle = '#ff69b4';
+            ctx.beginPath();
+            ctx.moveTo(300, 500);
+            ctx.lineTo(320, 480);
+            ctx.lineTo(340, 500);
+            ctx.lineTo(320, 520);
+            ctx.closePath();
+            ctx.fill();
+            
+            // 绘制岩石
+            ctx.fillStyle = '#a9a9a9';
+            ctx.beginPath();
+            ctx.arc(500, 350, 25, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawGameUI() {
+            // 绘制金币计数
+            ctx.fillStyle = '#ffcc00';
+            ctx.font = '20px Arial';
+            ctx.fillText(`金币: ¥${gameState.currentMoney}`, 650, 50);
+            
+            // 绘制时间
+            ctx.fillStyle = '#00ff00';
+            ctx.fillText(`时间: ${gameState.remainingTime}s`, 650, 80);
+            
+            // 绘制关卡
+            ctx.fillStyle = '#ff9900';
+            ctx.fillText(`关卡: ${gameState.currentLevel}`, 650, 110);
+        }
+
+        // 游戏主循环
+        function gameLoop() {
+            if (!gameState.isPlaying) return;
+            
+            // 更新游戏状态
+            updateGame();
+            
+            // 绘制游戏
+            drawGame();
+            
+            // 检查游戏结束条件
+            checkGameOver();
+            
+            // 继续循环
+            requestAnimationFrame(gameLoop);
+        }
+
+        function updateGame() {
+            // 减少时间
+            if (gameState.remainingTime > 0) {
+                gameState.remainingTime -= 0.016; // 大约60fps
+            }
+            
+            updateUI();
+        }
+
+        function checkGameOver() {
+            if (gameState.remainingTime <= 0) {
+                endGame(false);
+            } else if (gameState.currentMoney >= gameState.targetMoney) {
+                endGame(true);
+            }
+        }
+
+        function endGame(isWin) {
+            gameState.isPlaying = false;
+            
+            if (isWin) {
+                // 关卡胜利
+                gameState.score += gameState.currentMoney * gameState.currentLevel;
+                
+                if (gameState.currentLevel < 10) {
+                    gameState.currentLevel++;
+                    gameState.targetMoney = 500 * gameState.currentLevel;
+                    gameState.remainingTime = 60;
+                    gameState.currentMoney = 0;
+                    
+                    alert(`恭喜！通过第${gameState.currentLevel-1}关！进入第${gameState.currentLevel}关！`);
+                    updateUI();
+                } else {
+                    alert('恭喜！完成所有关卡！你真是个黄金矿工大师！');
+                }
+            } else {
+                alert('时间到！游戏结束。点击"重新开始"按钮再次挑战！');
+            }
+            
+            // 更新最高分
+            if (gameState.score > gameState.highScore) {
+                gameState.highScore = gameState.score;
+                localStorage.setItem('goldMinerHighScore', gameState.highScore);
+                alert('🎉 恭喜刷新最高分！');
+            }
+            
+            updateUI();
+            gameOverlay.style.display = 'flex';
+        }
+
+        // 事件监听器
+        startGameBtn.addEventListener('click', () => {
+            gameState.isPlaying = true;
+            gameState.currentMoney = 0;
+            gameState.remainingTime = 60;
+            gameOverlay.style.display = 'none';
+            updateUI();
+            gameLoop();
+        });
+
+        dropHookBtn.addEventListener('click', () => {
+            if (gameState.isPlaying) {
+                // 模拟抓取物品
+                const randomValue = Math.floor(Math.random() * 100) + 50;
+                gameState.currentMoney += randomValue;
+                gameState.score += randomValue;
+                updateUI();
+            }
+        });
+
+        restartBtn.addEventListener('click', () => {
+            gameState.isPlaying = false;
+            gameState.currentLevel = 1;
+            gameState.currentMoney = 0;
+            gameState.targetMoney = 500;
+            gameState.remainingTime = 60;
+            gameState.score = 0;
+            updateUI();
+            gameOverlay.style.display = 'flex';
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            gameState.isPlaying = !gameState.isPlaying;
+            pauseBtn.innerHTML = gameState.isPlaying ? 
+                '<i class="fas fa-pause"></i> 暂停' : 
+                '<i class="fas fa-play"></i> 继续';
+            
+            if (gameState.isPlaying) {
+                gameLoop();
+            }
+        });
+
+        // 键盘控制
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && gameState.isPlaying) {
+                const randomValue = Math.floor(Math.random() * 100) + 50;
+                gameState.currentMoney += randomValue;
+                gameState.score += randomValue;
+                updateUI();
+            }
+        });
+
+        // 初始化
+        window.addEventListener('load', initGame);
+    </script>
+</body>
+</html>

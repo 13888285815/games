@@ -7,7 +7,7 @@ const translations = {
     // 中文（简体）
     'zh-CN': {
         // 通用
-        'siteTitle': '4399游戏世界 - 免费在线小游戏大全',
+        'siteTitle': '意念科技游戏世界 - 免费在线小游戏大全',
         'siteTagline': '免费在线小游戏大全 - 我的游戏，我做主！',
         'loading': '加载中...',
         'more': '更多',
@@ -69,12 +69,12 @@ const translations = {
         'privacy': '隐私政策',
         'terms': '服务条款',
         'help': '帮助中心',
-        'copyright': '版权所有 © 2026 4399游戏世界'
+        'copyright': '版权所有 © 2026 意念科技游戏世界'
     },
     
     // 英语
     'en-US': {
-        'siteTitle': '4399 Game World - Free Online Games Collection',
+        'siteTitle': 'IdeaTech Game World - Free Online Games Collection',
         'siteTagline': 'Free Online Games Collection - My Games, My Rules!',
         'loading': 'Loading...',
         'more': 'More',
@@ -136,12 +136,12 @@ const translations = {
         'privacy': 'Privacy Policy',
         'terms': 'Terms of Service',
         'help': 'Help Center',
-        'copyright': 'Copyright © 2026 4399 Game World'
+        'copyright': 'Copyright © 2026 IdeaTech Game World'
     },
     
     // 法语
     'fr-FR': {
-        'siteTitle': 'Monde de Jeux 4399 - Collection de Jeux en Ligne Gratuits',
+        'siteTitle': 'Monde de Jeux IdeaTech - Collection de Jeux en Ligne Gratuits',
         'siteTagline': 'Collection de Jeux en Ligne Gratuits - Mes Jeux, Mes Règles !',
         'loading': 'Chargement...',
         'more': 'Plus',
@@ -203,12 +203,12 @@ const translations = {
         'privacy': 'Politique de Confidentialité',
         'terms': 'Conditions d\'Utilisation',
         'help': 'Centre d\'Aide',
-        'copyright': 'Copyright © 2026 Monde de Jeux 4399'
+        'copyright': 'Copyright © 2026 Monde de Jeux IdeaTech'
     },
     
     // 德语
     'de-DE': {
-        'siteTitle': '4399 Spielewelt - Kostenlose Online-Spiele Sammlung',
+        'siteTitle': 'IdeaTech Spielewelt - Kostenlose Online-Spiele Sammlung',
         'siteTagline': 'Kostenlose Online-Spiele Sammlung - Meine Spiele, Meine Regeln!',
         'loading': 'Laden...',
         'more': 'Mehr',
@@ -270,12 +270,12 @@ const translations = {
         'privacy': 'Datenschutz',
         'terms': 'Nutzungsbedingungen',
         'help': 'Hilfe-Center',
-        'copyright': 'Copyright © 2026 4399 Spielewelt'
+        'copyright': 'Copyright © 2026 IdeaTech Spielewelt'
     },
     
     // 日语
     'ja-JP': {
-        'siteTitle': '4399ゲームワールド - 無料オンラインゲームコレクション',
+        'siteTitle': 'IdeaTechゲームワールド - 無料オンラインゲームコレクション',
         'siteTagline': '無料オンラインゲームコレクション - 私のゲーム、私のルール！',
         'loading': '読み込み中...',
         'more': 'もっと見る',
@@ -337,12 +337,12 @@ const translations = {
         'privacy': 'プライバシーポリシー',
         'terms': '利用規約',
         'help': 'ヘルプセンター',
-        'copyright': 'Copyright © 2026 4399ゲームワールド'
+        'copyright': 'Copyright © 2026 IdeaTechゲームワールド'
     },
     
     // 阿拉伯语（从右到左）
     'ar-SA': {
-        'siteTitle': 'عالم الألعاب 4399 - مجموعة الألعاب الإلكترونية المجانية',
+        'siteTitle': 'عالم الألعاب IdeaTech - مجموعة الألعاب الإلكترونية المجانية',
         'siteTagline': 'مجموعة الألعاب الإلكترونية المجانية - ألعابي، قوانيني!',
         'loading': 'جار التحميل...',
         'more': 'المزيد',
@@ -404,7 +404,7 @@ const translations = {
         'privacy': 'سياسة الخصوصية',
         'terms': 'شروط الخدمة',
         'help': 'مركز المساعدة',
-        'copyright': 'حقوق الطبع والنشر © 2026 عالم الألعاب 4399'
+        'copyright': 'حقوق الطبع والنشر © 2026 عالم الألعاب IdeaTech'
     }
 };
 

@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI功能演示 - 意念科技游戏世界</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* AI演示页面特定样式 */
+        .ai-demo-page {
+            padding: 40px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .ai-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .ai-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .ai-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .ai-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Token余额卡片 */
+        .token-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .token-info h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .token-balance {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .token-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .token-unit {
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .buy-tokens-btn {
+            padding: 15px 30px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .buy-tokens-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        /* AI功能卡片 */
+        .ai-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .ai-feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .ai-feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+        
+        .feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: 1.6rem;
+            color: #333;
+        }
+        
+        .feature-cost {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .feature-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .feature-examples {
+            margin-bottom: 25px;
+        }
+        
+        .example-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .example-list li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+        
+        .example-list li:before {
+            content: "✓";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .feature-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .feature-btn {
+            padding: 12px 25px;
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .feature-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+        
+        .feature-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* 结果展示区 */
+        .results-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .results-header h2 {
+            color: #333;
+            font-size: 2rem;
+        }
+        
+        .clear-results-btn {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .clear-results-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .results-container {
+            min-height: 200px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .result-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .result-title {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .result-tokens {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .result-content {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        /* 使用历史 */
+        .history-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .history-header {
+            margin-bottom: 30px;
+        }
+        
+        .history-header h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .history-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #666;
+        }
+        
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-feature {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .history-tokens {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .history-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .ai-features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .token-card {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .feature-actions {
+                flex-direction: column;
+            }
+            
+            .history-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ai-feature-card, .result-item, .history-item {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="ai-demo-page">
+        <div class="ai-container">
+            <!-- 头部 -->
+            <header class="ai-header">
+                <h1><i class="fas fa-brain"></i> AI功能演示</h1>
+                <p>体验意念科技游戏世界的AI功能，使用AI Tokens解锁智能游戏体验</p>
+            </header>
+            
+            <!-- Token余额 -->
+            <section class="token-card">
+                <div class="token-info">
+                    <h2>AI Tokens余额</h2>
+                    <div class="token-balance">
+                        <span class="token-amount" id="tokenBalance">0</span>
+                        <span class="token-unit">Tokens</span>
+                    </div>
+                    <p style="color: #666; margin-top: 10px;">Tokens用于调用AI功能，可以通过购买或订阅获得</p>
+                </div>
+                <button class="buy-tokens-btn" onclick="openSubscriptionPage()">
+                    <i class="fas fa-shopping-cart"></i> 购买Tokens
+                </button>
+            </section>
+            
+            <!-- AI功能展示 -->
+            <section class="ai-features-section">
+                <h2 style="color: white; text-align: center; margin-bottom: 30px; font-size: 2.5rem;">
+                    <i class="fas fa-magic"></i> AI功能列表
+                </h2>
+                
+                <div class="ai-features-grid">
+                    <!-- 文本补全 -->
+                    <div class="ai-feature-card">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-font"></i>
+                            </div>
+                            <h3 class="feature-title">
+                                文本补全
+                                <span class="feature-cost">10 Tokens/次</span>
+                            </h3>
+                        </div>
+                        <p class="feature-description">
+                            使用AI生成游戏相关内容，包括游戏名称、描述、提示语等。
+                        </p>
+                        <div class="feature-examples">
+                            <h4>示例功能：</h4>
+                            <ul class="example-list">
+                                <li>游戏名称生成</li>
+                                <li>游戏描述生成</li>
+                                <li>游戏技巧提示</li>
+                                <li>游戏剧情编写</li>
+                            </ul>
+                        </div>
+                        <div class="feature-actions">
+                            <button class="feature-btn" onclick="generateGameName()">
+                                生成游戏名称
+                            </button>
+                            <button class="feature-btn primary" onclick="generateGameTip()">
+                                生成游戏提示
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 游戏分析 -->
+                    <div class="ai-feature-card">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="feature-title">
+                                游戏分析
+                                <span class="feature-cost">20 Tokens/次</span>
+                            </h3>
+                        </div>
+                        <p class="feature-description">
+                            AI分析游戏数据和玩家行为，提供深入的统计和洞察。
+                        </p>
+                        <div class="feature-examples">
+                            <h4>示例功能：</h4>
+                            <ul class="example-list">
+                                <li>玩家行为分析</li>
+                                <li>游戏数据统计</li>
+                                <li>推荐算法优化</li>
+                                <li>玩家留存分析</li>
+                            </ul>
+                        </div>
+                        <div class="feature-actions">
+                            <button class="feature-btn" onclick="analyzeGameData()">
+                                分析游戏数据
+                            </button>
+                            <button class="feature-btn primary" onclick="analyzePlayerBehavior()">
+                                分析玩家行为
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 玩家推荐 -->
+                    <div class="ai-feature-card">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="feature-title">
+                                玩家推荐
+                                <span class="feature-cost">15 Tokens/次</span>
+                            </h3>
+                        </div>
+                        <p class="feature-description">
+                            基于玩家行为和偏好，推荐适合的游戏和相似玩家。
+                        </p>
+                        <div class="feature-examples">
+                            <h4>示例功能：</h4>
+                            <ul class="example-list">
+                                <li>个性化游戏推荐</li>
+                                <li>相似玩家匹配</li>
+                                <li>好友推荐</li>
+                                <li>游戏组队建议</li>
+                            </ul>
+                        </div>
+                        <div class="feature-actions">
+                            <button class="feature-btn" onclick="getGameRecommendations()">
+                                游戏推荐
+                            </button>
+                            <button class="feature-btn primary" onclick="findSimilarPlayers()">
+                                相似玩家
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 策略生成 -->
+                    <div class="ai-feature-card">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-chess"></i>
+                            </div>
+                            <h3 class="feature-title">
+                                策略生成
+                                <span class="feature-cost">30 Tokens/次</span>
+                            </h3>
+                        </div>
+                        <p class="feature-description">
+                            AI生成游戏攻略和策略，帮助玩家提高游戏水平。
+                        </p>
+                        <div class="feature-examples">
+                            <h4>示例功能：</h4>
+                            <ul class="example-list">
+                                <li>游戏攻略生成</li>
+                                <li>最佳玩法建议</li>
+                                <li>战术分析</li>
+                                <li>通关技巧</li>
+                            </ul>
+                        </div>
+                        <div class="feature-actions">
+                            <button class="feature-btn" onclick="generateGameStrategy()">
+                                生成攻略
+                            </button>
+                            <button class="feature-btn primary" onclick="getGameTips()">
+                                获取技巧
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- AI助手 -->
+                    <div class="ai-feature-card">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3 class="feature-title">
+                                AI助手
+                                <span class="feature-cost">5 Tokens/分钟</span>
+                            </h3>
+                        </div>
+                        <p class="feature-description">
+                            实时AI游戏助手，解答问题并提供指导。
+                        </p>
+                        <div class="feature-examples">
+                            <h4>示例功能：</h4>
+                            <ul class="example-list">
+                                <li>实时游戏指导</li>
+                                <li>问题解答</li>
+                                <li>技巧提示</li>
+                                <li>操作建议</li>
+                            </ul>
+                        </div>
+                        <div class="feature-actions">
+                            <button class="feature-btn" onclick="askAIAssistant()">
+                                提问AI助手
+                            </button>
+                            <button class="feature-btn primary" onclick="startAIAssistant()">
+                                开始AI助手
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 预测分析 -->
+                    <div class="ai-feature-card">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-crystal-ball"></i>
+                            </div>
+                            <h3 class="feature-title">
+                                预测分析
+                                <span class="feature-cost">40 Tokens/次</span>
+                            </h3>
+                        </div>
+                        <p class="feature-description">
+                            AI预测游戏趋势和玩家行为，提供未来洞察。
+                        </p>
+                        <div class="feature-examples">
+                            <h4>示例功能：</h4>
+                            <ul class="example-list">
+                                <li>游戏结果预测</li>
+                                <li>玩家流失预测</li>
+                                <li>收入预测</li>
+                                <li>趋势分析</li>
+                            </ul>
+                        </div>
+                        <div class="feature-actions">
+                            <button class="feature-btn" onclick="predictGameTrends()">
+                                预测趋势
+                            </button>
+                            <button class="feature-btn primary" onclick="analyzePlayerChurn()">
+                                分析流失率
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 结果展示区 -->
+            <section class="results-section">
+                <div class="results-header">
+                    <h2><i class="fas fa-poll"></i> AI结果展示</h2>
+                    <button class="clear-results-btn" onclick="clearResults()">
+                        <i class="fas fa-trash-alt"></i> 清除结果
+                    </button>
+                </div>
+                <div class="results-container" id="resultsContainer">
+                    <div class="result-item">
+                        <div class="result-header">
+                            <span class="result-title">欢迎使用AI功能演示</span>
+                            <span class="result-tokens">0 Tokens</span>
+                        </div>
+                        <div class="result-content">
+                            点击上方的AI功能按钮开始体验。每个功能都会消耗相应的AI Tokens。
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 使用历史 -->
+            <section class="history-section">
+                <div class="history-header">
+                    <h2><i class="fas fa-history"></i> 使用历史</h2>
+                </div>
+                
+                <div class="history-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalUsed">0</div>
+                        <div class="stat-label">总使用Tokens</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCalls">0</div>
+                        <div class="stat-label">总调用次数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="avgCost">0</div>
+                        <div class="stat-label">平均每次Tokens</div>
+                    </div>
+                </div>
+                
+                <div class="history-list" id="historyList">
+                    <div class="history-item">
+                        <span class="history-feature">等待使用记录...</span>
+                        <span class="history-tokens">0 Tokens</span>
+                        <span class="history-time">-</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- 引入AI API系统 -->
+    <script src="scripts/ai-api-billing.js"></script>
+    <script src="scripts/subscription-system.js"></script>
+    
+    <script>
+        // 全局AI API实例
+        const aiAPI = window.AIAPI;
+        
+        // 更新Token余额显示
+        function updateTokenBalance() {
+            const subscriptionManager = window.SubscriptionManager;
+            if (subscriptionManager) {
+                document.getElementById('tokenBalance').textContent = 
+                    subscriptionManager.aiTokens.toLocaleString();
+            }
+        }
+        
+        // 更新使用历史
+        function updateUsageHistory() {
+            const stats = aiAPI.getStats();
+            const history = aiAPI.getHistory(10);
+            
+            // 更新统计数据
+            document.getElementById('totalUsed').textContent = stats.totalUsed;
+            document.getElementById('totalCalls').textContent = Object.keys(stats.byFeature).length;
+            document.getElementById('avgCost').textContent = stats.totalUsed > 0 ? 
+                Math.round(stats.totalUsed / Object.keys(stats.byFeature).length) : 0;
+            
+            // 更新历史列表
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            
+            if (history.length === 0) {
+                historyList.innerHTML = `
+                    <div class="history-item">
+                        <span class="history-feature">暂无使用记录</span>
+                        <span class="history-tokens">0 Tokens</span>
+                        <span class="history-time">-</span>
+                    </div>
+                `;
+                return;
+            }
+            
+            history.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const featureName = getFeatureName(item.featureType);
+                const time = new Date(item.timestamp).toLocaleTimeString('zh-CN');
+                const date = new Date(item.timestamp).toLocaleDateString('zh-CN');
+                
+                historyItem.innerHTML = `
+                    <span class="history-feature">${featureName}</span>
+                    <span class="history-tokens">${item.tokensUsed} Tokens</span>
+                    <span class="history-time">${date} ${time}</span>
+                `;
+                
+                historyList.appendChild(historyItem);
+            });
+        }
+        
+        // 获取功能名称
+        function getFeatureName(featureType) {
+            const featureNames = {
+                'text_completion': '文本补全',
+                'game_analysis': '游戏分析',
+                'player_recommendation': '玩家推荐',
+                'strategy_generation': '策略生成',
+                'ai_assistant': 'AI助手',
+                'predictive_analytics': '预测分析',
+                'image_generation': '图像生成',
+                'difficulty_adjustment': '难度调整',
+                'content_moderation': '内容审核'
+            };
+            
+            return featureNames[featureType] || featureType;
+        }
+        
+        // 添加结果到展示区
+        function addResult(title, content, tokensUsed) {
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
+            resultItem.innerHTML = `
+                <div class="result-header">
+                    <span class="result-title">${title}</span>
+                    <span class="result-tokens">${tokensUsed} Tokens</span>
+                </div>
+                <div class="result-content">${content}</div>
+            `;
+            
+            // 添加到顶部
+            resultsContainer.insertBefore(resultItem, resultsContainer.firstChild);
+            
+            // 滚动到顶部
+            resultsContainer.scrollTop = 0;
+        }
+        
+        // 清除所有结果
+        function clearResults() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.innerHTML = `
+                <div class="result-item">
+                    <div class="result-header">
+                        <span class="result-title">结果已清除</span>
+                        <span class="result-tokens">0 Tokens</span>
+                    </div>
+                    <div class="result-content">
+                        点击上方的AI功能按钮开始新的体验。
+                    </div>
+                </div>
+            `;
+        }
+        
+        // AI功能调用函数
+        async function generateGameName() {
+            try {
+                const response = await aiAPI.call('text_completion', {
+                    promptType: 'game_name',
+                    text: '有趣的游戏名称'
+                });
+                
+                const names = response.data.completions;
+                const content = names.map((name, index) => 
+                    `${index + 1}. ${name}`
+                ).join('<br>');
+                
+                addResult('AI生成的游戏名称', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '生成失败，请检查Token余额');
+            }
+        }
+        
+        async function generateGameTip() {
+            try {
+                const response = await aiAPI.call('text_completion', {
+                    promptType: 'tip',
+                    text: '游戏技巧提示'
+                });
+                
+                const tips = response.data.completions;
+                const content = tips.map((tip, index) => 
+                    `💡 ${tip}`
+                ).join('<br><br>');
+                
+                addResult('AI生成的游戏技巧', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '生成失败，请检查Token余额');
+            }
+        }
+        
+        async function analyzeGameData() {
+            try {
+                const response = await aiAPI.call('game_analysis', {
+                    gameId: 'demo_game'
+                });
+                
+                const stats = response.data.stats;
+                const content = `
+                    📊 游戏数据统计：<br>
+                    • 总玩家数：${stats.totalPlayers.toLocaleString()}<br>
+                    • 平均游玩时间：${stats.averagePlayTime}分钟<br>
+                    • 通关率：${stats.completionRate}<br>
+                    • 难度评级：${stats.difficultyRating}/5<br>
+                    • 玩家留存率：${stats.playerRetention}<br><br>
+                    
+                    💡 AI建议：<br>
+                    ${response.data.recommendations.map(rec => `• ${rec}`).join('<br>')}
+                `;
+                
+                addResult('游戏数据分析报告', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '分析失败，请检查Token余额');
+            }
+        }
+        
+        async function analyzePlayerBehavior() {
+            try {
+                const response = await aiAPI.call('game_analysis', {
+                    gameId: 'player_analysis'
+                });
+                
+                const content = `
+                    👤 玩家行为分析：<br>
+                    • 活跃时间段：晚上 20:00-22:00<br>
+                    • 平均游戏时长：25分钟<br>
+                    • 偏好游戏类型：动作、益智<br>
+                    • 社交互动频率：中等<br>
+                    • 付费意愿：较高<br><br>
+                    
+                    🎯 优化建议：<br>
+                    • 在活跃时间段推送新游戏通知<br>
+                    • 增加动作益智类游戏内容<br>
+                    • 优化社交功能体验<br>
+                    • 提供更多付费选项
+                `;
+                
+                addResult('玩家行为分析报告', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '分析失败，请检查Token余额');
+            }
+        }
+        
+        async function getGameRecommendations() {
+            try {
+                const response = await aiAPI.call('player_recommendation', {
+                    userId: 'demo_user'
+                });
+                
+                const recommendations = response.data.recommendations;
+                const content = recommendations.map(rec => 
+                    `🎮 ${rec.title} (匹配度：${rec.matchScore}%)<br>
+                    💡 推荐理由：${rec.reason}<br>`
+                ).join('<br>');
+                
+                addResult('个性化游戏推荐', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '推荐失败，请检查Token余额');
+            }
+        }
+        
+        async function findSimilarPlayers() {
+            try {
+                const response = await aiAPI.call('player_recommendation', {
+                    userId: 'demo_user'
+                });
+                
+                const similarPlayers = response.data.similarPlayers;
+                const content = similarPlayers.map(player => 
+                    `👤 玩家 ${player.id} (相似度：${player.similarity}%)<br>`
+                ).join('<br>');
+                
+                addResult('相似玩家匹配', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '匹配失败，请检查Token余额');
+            }
+        }
+        
+        async function generateGameStrategy() {
+            try {
+                const response = await aiAPI.call('strategy_generation', {
+                    gameId: 'strategy_demo'
+                });
+                
+                const strategies = response.data.strategies;
+                let content = '';
+                
+                strategies.forEach(strategy => {
+                    content += `📋 ${strategy.title} (难度：${strategy.difficulty})<br>`;
+                    content += `⏱️ 预计时间：${strategy.estimatedTime}<br>`;
+                    content += `📝 步骤：<br>`;
+                    strategy.steps.forEach(step => {
+                        content += `   • ${step}<br>`;
+                    });
+                    content += '<br>';
+                });
+                
+                addResult('游戏攻略生成', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '生成失败，请检查Token余额');
+            }
+        }
+        
+        async function getGameTips() {
+            try {
+                const response = await aiAPI.call('strategy_generation', {
+                    gameId: 'tips_demo'
+                });
+                
+                const tips = response.data.tips;
+                const content = tips.map(tip => 
+                    `💡 ${tip}`
+                ).join('<br><br>');
+                
+                addResult('游戏技巧提示', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '获取失败，请检查Token余额');
+            }
+        }
+        
+        async function askAIAssistant() {
+            const question = prompt('请问AI助手什么问题？', '怎么玩这个游戏？');
+            if (!question) return;
+            
+            try {
+                const response = await aiAPI.call('ai_assistant', {
+                    query: question
+                });
+                
+                const content = `
+                    ❓ 问题：${question}<br><br>
+                    🤖 AI回答：${response.data.response}<br><br>
+                    💡 其他建议：<br>
+                    ${response.data.suggestions.map(sug => `• ${sug}`).join('<br>')}
+                `;
+                
+                addResult('AI助手问答', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '提问失败，请检查Token余额');
+            }
+        }
+        
+        async function startAIAssistant() {
+            alert('AI助手已启动！\n\n在游戏中，AI助手会实时提供指导和建议。\n注意：此功能会持续消耗AI Tokens。');
+            
+            // 模拟持续使用AI助手
+            try {
+                // 每30秒消耗一次Tokens
+                setInterval(async () => {
+                    if (aiAPI.hasTokens('ai_assistant')) {
+                        await aiAPI.call('ai_assistant', {
+                            query: '游戏状态检查'
+                        });
+                        updateTokenBalance();
+                    }
+                }, 30000);
+                
+            } catch (error) {
+                console.warn('AI助手启动失败:', error);
+            }
+        }
+        
+        async function predictGameTrends() {
+            try {
+                const response = await aiAPI.call('predictive_analytics', {});
+                
+                const predictions = response.data.predictions;
+                const content = `
+                    🔮 游戏趋势预测：<br>
+                    • 玩家流失风险：${predictions.playerChurnRisk}<br>
+                    • 下月预计收入：¥${predictions.nextMonthRevenue.toLocaleString()}<br>
+                    • 下周热门游戏：${predictions.popularGameNextWeek.join(', ')}<br>
+                    • 高峰游玩时间：${predictions.peakPlayTime}<br><br>
+                    
+                    📈 关键洞察：<br>
+                    ${response.data.insights.map(insight => `• ${insight}`).join('<br>')}<br><br>
+                    
+                    🎯 优化建议：<br>
+                    ${response.data.recommendations.map(rec => `• ${rec}`).join('<br>')}
+                `;
+                
+                addResult('游戏趋势预测分析', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '预测失败，请检查Token余额');
+            }
+        }
+        
+        async function analyzePlayerChurn() {
+            try {
+                const response = await aiAPI.call('predictive_analytics', {
+                    analysisType: 'player_churn'
+                });
+                
+                const content = `
+                    📉 玩家流失分析：<br>
+                    • 高风险玩家：15%<br>
+                    • 中等风险玩家：30%<br>
+                    • 低风险玩家：55%<br><br>
+                    
+                    ⚠️ 流失预警：<br>
+                    • 连续3天未登录：8%玩家<br>
+                    • 近期付费下降：12%玩家<br>
+                    • 游戏时长减少：20%玩家<br><br>
+                    
+                    🛡️ 预防措施：<br>
+                    • 推送个性化召回通知<br>
+                    • 提供回归玩家奖励<br>
+                    • 优化游戏新手引导<br>
+                    • 增加社交互动功能
+                `;
+                
+                addResult('玩家流失风险分析', content, response.tokensUsed);
+                updateUsageHistory();
+                updateTokenBalance();
+                
+            } catch (error) {
+                alert(error.message || '分析失败，请检查Token余额');
+            }
+        }
+        
+        // 打开订阅页面
+        function openSubscriptionPage() {
+            if (window.location.pathname.includes('subscription.html')) {
+                alert('您已经在订阅页面！');
+                return;
+            }
+            
+            if (confirm('跳转到订阅管理页面购买AI Tokens？')) {
+                window.location.href = 'subscription.html';
+            }
+        }
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新Token余额
+            updateTokenBalance();
+            
+            // 更新使用历史
+            updateUsageHistory();
+            
+            // 监听Token变化
+            document.addEventListener('tokensUsed', updateTokenBalance);
+            document.addEventListener('tokensPurchased', updateTokenBalance);
+            
+            console.log('AI功能演示页面已初始化');
+        });
+    </script>
+</body>
+</html>

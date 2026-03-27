@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>森林冰火人 - 意念科技游戏世界</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/game.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <header class="game-header">
+            <div class="container">
+                <h1><i class="fas fa-fire"></i> 森林冰火人 <i class="fas fa-snowflake"></i></h1>
+                <p class="game-subtitle">经典双人合作冒险游戏</p>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="container">
+                <div class="game-container">
+                    <div class="game-placeholder">
+                        <i class="fas fa-fire-extinguisher"></i>
+                        <h2>森林冰火人</h2>
+                        <p>冰火人兄弟的冒险即将开始！</p>
+                        <div class="player-selection">
+                            <h3>选择游戏模式</h3>
+                            <div class="mode-buttons">
+                                <button id="singlePlayerBtn" class="btn-game-mode">
+                                    <i class="fas fa-user"></i> 单人模式
+                                </button>
+                                <button id="twoPlayersBtn" class="btn-game-mode">
+                                    <i class="fas fa-users"></i> 双人模式
+                                </button>
+                            </div>
+                        </div>
+                        <div class="game-instructions">
+                            <h4>游戏说明：</h4>
+                            <ul>
+                                <li>控制冰火人兄弟穿越森林迷宫</li>
+                                <li>收集所有宝石解锁出口</li>
+                                <li>火人怕水，冰人怕火</li>
+                                <li>合作解开关卡谜题</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 简单的游戏逻辑
+        document.getElementById('twoPlayersBtn').addEventListener('click', () => {
+            alert('双人模式已选择！冰火人兄弟准备出发！\n\n火人控制：WASD键\n冰人控制：方向键');
+        });
+        
+        document.getElementById('singlePlayerBtn').addEventListener('click', () => {
+            alert('单人模式已选择！你需要同时控制两个角色！\n\n切换角色：Tab键\n移动：WASD键');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订阅管理 - 意念科技游戏世界</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 订阅页面特定样式 */
+        .subscription-page {
+            padding: 40px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .subscription-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .subscription-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+        
+        .subscription-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subscription-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 计划卡片 */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .plan-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+        
+        .plan-card.popular {
+            border: 3px solid #ff6b6b;
+            transform: scale(1.05);
+        }
+        
+        .plan-card.popular .plan-badge {
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 40px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .plan-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .plan-name {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .plan-price {
+            font-size: 3rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .plan-period {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .plan-features {
+            margin-bottom: 40px;
+        }
+        
+        .plan-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .plan-feature i {
+            color: #4CAF50;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .plan-feature.unavailable i {
+            color: #ff6b6b;
+        }
+        
+        .plan-feature.unavailable {
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .plan-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .plan-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .plan-button.current {
+            background: #4CAF50;
+        }
+        
+        /* AI Tokens购买区 */
+        .tokens-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .tokens-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .tokens-header h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .tokens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .token-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .token-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .token-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .token-price {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .token-unit-price {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .token-button {
+            padding: 12px 30px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .token-button:hover {
+            background: #ff5252;
+        }
+        
+        /* 用户信息面板 */
+        .user-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        .info-card h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: #333;
+            font-weight: bold;
+        }
+        
+        /* 验证区域 */
+        .verification-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .verification-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .verification-step {
+            text-align: center;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #e0e0e0;
+            color: #666;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .verification-step.active .step-number {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .verification-step.completed .step-number {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .step-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .plan-card.popular {
+                transform: none;
+            }
+            
+            .verification-steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+        
+        /* 状态指示器 */
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-active {
+            background: #4CAF50;
+        }
+        
+        .status-inactive {
+            background: #ff6b6b;
+        }
+        
+        .status-pending {
+            background: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="subscription-page">
+        <div class="subscription-container">
+            <!-- 头部 -->
+            <header class="subscription-header">
+                <h1><i class="fas fa-crown"></i> 订阅管理</h1>
+                <p>升级您的游戏体验，解锁更多功能和特权</p>
+            </header>
+            
+            <!-- 用户信息面板 -->
+            <section class="user-panel" id="userPanel">
+                <div class="user-info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-user-circle"></i> 用户信息</h3>
+                        <div class="info-item">
+                            <span class="info-label">登录状态</span>
+                            <span class="info-value" id="loginStatus">未登录</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">邮箱</span>
+                            <span class="info-value" id="userEmail">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">注册时间</span>
+                            <span class="info-value" id="registeredAt">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-shield-alt"></i> 订阅状态</h3>
+                        <div class="info-item">
+                            <span class="info-label">当前计划</span>
+                            <span class="info-value" id="currentPlan">免费计划</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">订阅状态</span>
+                            <span class="info-value">
+                                <span class="status-indicator status-active" id="statusIndicator"></span>
+                                <span id="subscriptionStatus">未订阅</span>
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">到期时间</span>
+                            <span class="info-value" id="expiresAt">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-coins"></i> 资源使用</h3>
+                        <div class="info-item">
+                            <span class="info-label">AI Tokens余额</span>
+                            <span class="info-value" id="aiTokensBalance">0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">今日游戏次数</span>
+                            <span class="info-value" id="gamesToday">0/3</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">验证级别</span>
+                            <span class="info-value" id="verificationLevel">未验证</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons" style="margin-top: 30px; text-align: center;">
+                    <button id="loginBtn" class="plan-button" style="width: auto; display: inline-block; margin: 0 10px;">
+                        <i class="fas fa-sign-in-alt"></i> 登录/注册
+                    </button>
+                    <button id="refreshBtn" class="plan-button" style="width: auto; display: inline-block; margin: 0 10px; background: #4CAF50;">
+                        <i class="fas fa-sync-alt"></i> 刷新状态
+                    </button>
+                    <button id="generateReportBtn" class="plan-button" style="width: auto; display: inline-block; margin: 0 10px; background: #2196F3;">
+                        <i class="fas fa-file-alt"></i> 生成报告
+                    </button>
+                </div>
+            </section>
+            
+            <!-- 验证区域 -->
+            <section class="verification-section">
+                <h2 style="text-align: center; color: #333; margin-bottom: 20px;">
+                    <i class="fas fa-shield-alt"></i> 账户验证
+                </h2>
+                <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                    验证您的账户以解锁更多功能和更高的安全性
+                </p>
+                
+                <div class="verification-steps">
+                    <div class="verification-step completed" id="step1">
+                        <div class="step-number">1</div>
+                        <h4 class="step-title">邮箱验证</h4>
+                        <p class="step-description">验证您的邮箱地址</p>
+                        <button class="token-button verify-btn" data-step="email">验证邮箱</button>
+                    </div>
+                    
+                    <div class="verification-step" id="step2">
+                        <div class="step-number">2</div>
+                        <h4 class="step-title">手机验证</h4>
+                        <p class="step-description">验证您的手机号码</p>
+                        <button class="token-button verify-btn" data-step="phone">验证手机</button>
+                    </div>
+                    
+                    <div class="verification-step" id="step3">
+                        <div class="step-number">3</div>
+                        <h4 class="step-title">身份验证</h4>
+                        <p class="step-description">完成身份认证</p>
+                        <button class="token-button verify-btn" data-step="id">身份认证</button>
+                    </div>
+                    
+                    <div class="verification-step" id="step4">
+                        <div class="step-number">4</div>
+                        <h4 class="step-title">高级验证</h4>
+                        <p class="step-description">企业级验证</p>
+                        <button class="token-button verify-btn" data-step="premium">高级验证</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 订阅计划区域 -->
+            <section class="plans-section">
+                <h2 style="text-align: center; color: white; margin-bottom: 40px; font-size: 2.5rem;">
+                    <i class="fas fa-rocket"></i> 选择适合您的计划
+                </h2>
+                
+                <div class="plans-grid">
+                    <!-- 免费计划 -->
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <h3 class="plan-name">免费计划</h3>
+                            <div class="plan-price">¥0</div>
+                            <div class="plan-period">每月</div>
+                        </div>
+                        
+                        <div class="plan-features">
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>基础游戏访问</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>每日3次游戏机会</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>基础游戏功能</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>社区排行榜查看</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>邮件支持</span>
+                            </div>
+                        </div>
+                        
+                        <button class="plan-button current" onclick="subscribeToPlan('FREE')">
+                            当前计划
+                        </button>
+                    </div>
+                    
+                    <!-- 基础计划 -->
+                    <div class="plan-card popular">
+                        <div class="plan-badge">推荐</div>
+                        <div class="plan-header">
+                            <h3 class="plan-name">基础计划</h3>
+                            <div class="plan-price">¥29</div>
+                            <div class="plan-period">每月</div>
+                        </div>
+                        
+                        <div class="plan-features">
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>无限制游戏访问</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>高级游戏功能</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>无广告体验</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>每日游戏统计</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>优先客服支持</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>1000 AI Tokens/月</span>
+                            </div>
+                        </div>
+                        
+                        <button class="plan-button" onclick="subscribeToPlan('BASIC')">
+                            升级计划
+                        </button>
+                    </div>
+                    
+                    <!-- 专业计划 -->
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <h3 class="plan-name">专业计划</h3>
+                            <div class="plan-price">¥99</div>
+                            <div class="plan-period">每月</div>
+                        </div>
+                        
+                        <div class="plan-features">
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>所有高级游戏</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>专属游戏内道具</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>高级数据分析</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>自定义游戏体验</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>24/7专属支持</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>5000 AI Tokens/月</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>API访问权限</span>
+                            </div>
+                        </div>
+                        
+                        <button class="plan-button" onclick="subscribeToPlan('PRO')">
+                            升级计划
+                        </button>
+                    </div>
+                    
+                    <!-- 企业计划 -->
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <h3 class="plan-name">企业计划</h3>
+                            <div class="plan-price">¥299</div>
+                            <div class="plan-period">每月</div>
+                        </div>
+                        
+                        <div class="plan-features">
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>所有Pro计划功能</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>无限制AI Tokens</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>定制游戏开发</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>数据分析API</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>团队管理工具</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>专属客户经理</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>SLA服务协议</span>
+                            </div>
+                        </div>
+                        
+                        <button class="plan-button" onclick="subscribeToPlan('ENTERPRISE')">
+                            联系销售
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- AI Tokens购买区域 -->
+            <section class="tokens-section">
+                <div class="tokens-header">
+                    <h2><i class="fas fa-brain"></i> AI Tokens 购买</h2>
+                    <p style="color: #666; font-size: 1.1rem; margin-top: 10px;">
+                        购买AI Tokens以使用AI功能，批量购买更优惠！
+                    </p>
+                </div>
+                
+                <div class="tokens-grid">
+                    <!-- 标准包 -->
+                    <div class="token-card">
+                        <div class="token-amount">1,000</div>
+                        <div class="token-price">¥10</div>
+                        <div class="token-unit-price">每个Token ¥0.01</div>
+                        <button class="token-button" onclick="purchaseAITokens('standard')">
+                            立即购买
+                        </button>
+                    </div>
+                    
+                    <!-- 商务包 -->
+                    <div class="token-card">
+                        <div class="token-amount">5,000</div>
+                        <div class="token-price">¥45</div>
+                        <div class="token-unit-price">每个Token ¥0.009</div>
+                        <div style="color: #ff6b6b; font-weight: bold; margin-bottom: 10px;">节省10%</div>
+                        <button class="token-button" onclick="purchaseAITokens('business')">
+                            立即购买
+                        </button>
+                    </div>
+                    
+                    <!-- 专业包 -->
+                    <div class="token-card">
+                        <div class="token-amount">10,000</div>
+                        <div class="token-price">¥80</div>
+                        <div class="token-unit-price">每个Token ¥0.008</div>
+                        <div style="color: #ff6b6b; font-weight: bold; margin-bottom: 10px;">节省20%</div>
+                        <button class="token-button" onclick="purchaseAITokens('professional')">
+                            立即购买
+                        </button>
+                    </div>
+                    
+                    <!-- 企业包 -->
+                    <div class="token-card">
+                        <div class="token-amount">50,000</div>
+                        <div class="token-price">¥350</div>
+                        <div class="token-unit-price">每个Token ¥0.007</div>
+                        <div style="color: #ff6b6b; font-weight: bold; margin-bottom: 10px;">节省30%</div>
+                        <button class="token-button" onclick="purchaseAITokens('enterprise')">
+                            立即购买
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 使用说明 -->
+            <section class="verification-section">
+                <h2 style="text-align: center; color: #333; margin-bottom: 20px;">
+                    <i class="fas fa-question-circle"></i> 使用说明
+                </h2>
+                
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div class="info-item">
+                        <div class="info-label">1. 订阅流程</div>
+                        <div class="info-value">选择计划 → 支付 → 立即生效</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">2. AI Tokens</div>
+                        <div class="info-value">用于调用AI功能，如游戏推荐、数据分析等</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">3. 验证级别</div>
+                        <div class="info-value">验证级别越高，可用功能越多，安全性越强</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">4. 取消订阅</div>
+                        <div class="info-value">随时可以取消，已支付费用不退，剩余服务期可继续使用</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">5. 技术支持</div>
+                        <div class="info-value">邮箱：zzx@yndxw.com | 电话：13888285815</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- 引入订阅系统 -->
+    <script src="scripts/subscription-system.js"></script>
+    
+    <script>
+        // 全局订阅管理器
+        const subscriptionManager = window.SubscriptionManager;
+        
+        // 更新用户界面
+        function updateUserInterface() {
+            const user = subscriptionManager.currentUser;
+            const subscription = subscriptionManager.subscription;
+            const usageStats = subscriptionManager.getUsageStats();
+            
+            // 更新用户信息
+            document.getElementById('loginStatus').textContent = user ? '已登录' : '未登录';
+            document.getElementById('userEmail').textContent = user?.email || '-';
+            document.getElementById('registeredAt').textContent = user?.registeredAt ? 
+                new Date(user.registeredAt).toLocaleDateString('zh-CN') : '-';
+            
+            // 更新订阅信息
+            document.getElementById('currentPlan').textContent = usageStats.plan;
+            document.getElementById('subscriptionStatus').textContent = usageStats.subscriptionStatus;
+            document.getElementById('expiresAt').textContent = usageStats.expiresAt ? 
+                new Date(usageStats.expiresAt).toLocaleDateString('zh-CN') : '-';
+            
+            // 更新状态指示灯
+            const indicator = document.getElementById('statusIndicator');
+            if (usageStats.subscriptionStatus === 'active') {
+                indicator.className = 'status-indicator status-active';
+            } else {
+                indicator.className = 'status-indicator status-inactive';
+            }
+            
+            // 更新资源使用
+            document.getElementById('aiTokensBalance').textContent = subscriptionManager.aiTokens;
+            document.getElementById('gamesToday').textContent = 
+                `${usageStats.dailyUsage.gamesPlayed}/${usageStats.dailyUsage.maxGamesPerDay}`;
+            document.getElementById('verificationLevel').textContent = usageStats.verificationLevel;
+            
+            // 更新验证步骤
+            updateVerificationSteps();
+            
+            // 更新登录按钮文本
+            document.getElementById('loginBtn').innerHTML = user ? 
+                '<i class="fas fa-sign-out-alt"></i> 退出登录' :
+                '<i class="fas fa-sign-in-alt"></i> 登录/注册';
+        }
+        
+        // 更新验证步骤显示
+        function updateVerificationSteps() {
+            const verificationLevel = subscriptionManager.verificationLevel.level;
+            
+            // 重置所有步骤
+            document.querySelectorAll('.verification-step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            
+            // 设置已完成的步骤
+            for (let i = 0; i <= verificationLevel; i++) {
+                const step = document.getElementById(`step${i + 1}`);
+                if (step) {
+                    step.classList.add('completed');
+                    if (i === verificationLevel) {
+                        step.classList.add('active');
+                    }
+                }
+            }
+            
+            // 如果没有登录，禁用验证按钮
+            if (!subscriptionManager.currentUser) {
+                document.querySelectorAll('.verify-btn').forEach(btn => {
+                    btn.disabled = true;
+                    btn.textContent = '请先登录';
+                });
+            }
+        }
+        
+        // 订阅计划
+        function subscribeToPlan(planId) {
+            if (!subscriptionManager.currentUser) {
+                alert('请先登录后再订阅！');
+                showLoginModal();
+                return;
+            }
+            
+            if (confirm(`确定要订阅${planId}计划吗？`)) {
+                const success = subscriptionManager.subscribeToPlan(planId);
+                
+                if (success) {
+                    alert('订阅成功！');
+                    updateUserInterface();
+                    
+                    // 更新按钮状态
+                    document.querySelectorAll('.plan-button').forEach(btn => {
+                        btn.classList.remove('current');
+                        btn.textContent = '升级计划';
+                    });
+                    
+                    // 设置当前计划的按钮
+                    const currentBtn = document.querySelector(`[onclick="subscribeToPlan('${planId}')"]`);
+                    if (currentBtn) {
+                        currentBtn.classList.add('current');
+                        currentBtn.textContent = '当前计划';
+                    }
+                } else {
+                    alert('订阅失败，请重试！');
+                }
+            }
+        }
+        
+        // 购买AI Tokens
+        function purchaseAITokens(packageType) {
+            if (!subscriptionManager.currentUser) {
+                alert('请先登录后再购买！');
+                showLoginModal();
+                return;
+            }
+            
+            const packages = {
+                'standard': { name: '标准包', tokens: 1000, price: 10 },
+                'business': { name: '商务包', tokens: 5000, price: 45 },
+                'professional': { name: '专业包', tokens: 10000, price: 80 },
+                'enterprise': { name: '企业包', tokens: 50000, price: 350 }
+            };
+            
+            const pack = packages[packageType];
+            
+            if (confirm(`确定要购买${pack.name}吗？\n¥${pack.price} → ${pack.tokens} Tokens`)) {
+                const success = subscriptionManager.purchaseAITokens(packageType);
+                
+                if (success) {
+                    alert('购买成功！AI Tokens已添加到您的账户。');
+                    updateUserInterface();
+                } else {
+                    alert('购买失败，请重试！');
+                }
+            }
+        }
+        
+        // 验证账户
+        function setupVerificationButtons() {
+            document.querySelectorAll('.verify-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const step = this.dataset.step;
+                    
+                    if (!subscriptionManager.currentUser) {
+                        alert('请先登录！');
+                        showLoginModal();
+                        return;
+                    }
+                    
+                    switch(step) {
+                        case 'email':
+                            verifyEmail();
+                            break;
+                        case 'phone':
+                            verifyPhone();
+                            break;
+                        case 'id':
+                            verifyID();
+                            break;
+                        case 'premium':
+                            verifyPremium();
+                            break;
+                    }
+                });
+            });
+        }
+        
+        // 邮箱验证
+        function verifyEmail() {
+            const email = prompt('请输入您的邮箱地址进行验证：', subscriptionManager.currentUser?.email || '');
+            
+            if (email && subscriptionManager.verifyEmail(email)) {
+                alert('邮箱验证成功！');
+                updateUserInterface();
+            } else {
+                alert('邮箱验证失败，请重试！');
+            }
+        }
+        
+        // 手机验证
+        function verifyPhone() {
+            const phone = prompt('请输入您的手机号码进行验证：');
+            
+            if (phone && subscriptionManager.verifyPhone(phone)) {
+                alert('手机验证成功！');
+                updateUserInterface();
+            } else {
+                alert('手机验证失败，请重试！');
+            }
+        }
+        
+        // 身份验证
+        function verifyID() {
+            alert('身份验证需要上传身份证照片，请联系客服完成验证。\n\n客服邮箱：zzx@yndxw.com\n客服电话：13888285815');
+        }
+        
+        // 高级验证
+        function verifyPremium() {
+            alert('高级验证需要企业认证资料，请联系客服完成验证。\n\n客服邮箱：zzx@yndxw.com\n客服电话：13888285815');
+        }
+        
+        // 显示登录模态框
+        function showLoginModal() {
+            const email = prompt('请输入邮箱地址：');
+            if (!email) return;
+            
+            const password = prompt('请输入密码（测试阶段任意密码均可）：');
+            if (!password) return;
+            
+            if (!subscriptionManager.currentUser) {
+                // 注册新用户
+                subscriptionManager.registerUser(email, password);
+                alert('注册成功！已自动登录。');
+            } else {
+                // 登录现有用户
+                subscriptionManager.loginUser(email, password);
+                alert('登录成功！');
+            }
+            
+            updateUserInterface();
+        }
+        
+        // 生成报告
+        function generateReport() {
+            const report = subscriptionManager.generateSubscriptionReport();
+            alert(report);
+            
+            // 可选：将报告复制到剪贴板
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(report);
+                alert('报告已复制到剪贴板！');
+            }
+        }
+        
+        // 事件监听器设置
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            if (subscriptionManager.currentUser) {
+                if (confirm('确定要退出登录吗？')) {
+                    subscriptionManager.logoutUser();
+                    updateUserInterface();
+                    alert('已退出登录！');
+                }
+            } else {
+                showLoginModal();
+            }
+        });
+        
+        document.getElementById('refreshBtn').addEventListener('click', function() {
+            subscriptionManager.loadUserData();
+            updateUserInterface();
+            alert('状态已刷新！');
+        });
+        
+        document.getElementById('generateReportBtn').addEventListener('click', generateReport);
+        
+        // 监听订阅系统事件
+        document.addEventListener('subscriptionChanged', function(event) {
+            console.log('订阅已更改:', event.detail);
+            updateUserInterface();
+        });
+        
+        document.addEventListener('emailVerified', function() {
+            console.log('邮箱已验证');
+        });
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserInterface();
+            setupVerificationButtons();
+            
+            console.log('订阅管理页面已初始化');
+            console.log('当前用户:', subscriptionManager.currentUser);
+            console.log('订阅状态:', subscriptionManager.subscription);
+        });
+    </script>
+</body>
+</html>
