@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>离线模式 - 4399游戏世界</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .offline-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .offline-icon {
+            font-size: 80px;
+            color: #FF6B6B;
+            margin-bottom: 20px;
+        }
+        
+        .offline-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .offline-message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .offline-features {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .offline-features h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .offline-features ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .offline-features li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .offline-features i {
+            color: #4ECDC4;
+        }
+        
+        .offline-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-retry {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .btn-retry:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-games {
+            padding: 12px 30px;
+            background: white;
+            border: 2px solid #ddd;
+            color: #333;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-games:hover {
+            background: #f8f9fa;
+            border-color: #FF6B6B;
+        }
+        
+        .connection-status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        
+        .online {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        @media (max-width: 768px) {
+            .offline-container {
+                margin: 50px 20px;
+                padding: 30px 20px;
+            }
+            
+            .offline-title {
+                font-size: 24px;
+            }
+            
+            .offline-message {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">
+            <i class="fas fa-wifi-slash"></i>
+        </div>
+        
+        <h1 class="offline-title">网络连接中断</h1>
+        
+        <p class="offline-message">
+            当前网络连接不可用。不过别担心，部分功能仍然可以正常使用！
+        </p>
+        
+        <div class="connection-status offline" id="connectionStatus">
+            <i class="fas fa-exclamation-circle"></i> 当前处于离线状态
+        </div>
+        
+        <div class="offline-features">
+            <h3>离线模式下可用功能：</h3>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> 已缓存的游戏可以继续游玩</li>
+                <li><i class="fas fa-check-circle"></i> 游戏进度和最高分记录</li>
+                <li><i class="fas fa-check-circle"></i> 游戏分类和搜索功能</li>
+                <li><i class="fas fa-check-circle"></i> 用户设置和偏好</li>
+                <li><i class="fas fa-times-circle"></i> 需要网络连接的功能暂时不可用</li>
+            </ul>
+        </div>
+        
+        <div class="offline-actions">
+            <button class="btn-retry" id="retryBtn">
+                <i class="fas fa-sync-alt"></i> 重新连接
+            </button>
+            <button class="btn-games" id="gamesBtn">
+                <i class="fas fa-gamepad"></i> 玩离线游戏
+            </button>
+        </div>
+        
+        <div style="margin-top: 30px; color: #888; font-size: 14px;">
+            <p><i class="fas fa-info-circle"></i> 网络恢复后将自动同步数据</p>
+        </div>
+    </div>
+    
+    <script>
+        // 检测网络状态
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+            if (navigator.onLine) {
+                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> 网络连接已恢复';
+                statusElement.className = 'connection-status online';
+            } else {
+                statusElement.innerHTML = '<i class="fas fa-exclamation-circle"></i> 当前处于离线状态';
+                statusElement.className = 'connection-status offline';
+            }
+        }
+        
+        // 重新连接按钮
+        document.getElementById('retryBtn').addEventListener('click', function() {
+            window.location.reload();
+        });
+        
+        // 玩离线游戏按钮
+        document.getElementById('gamesBtn').addEventListener('click', function() {
+            // 尝试加载缓存的主页
+            if ('caches' in window) {
+                caches.match('/index.html')
+                    .then(response => {
+                        if (response) {
+                            window.location.href = '/';
+                        } else {
+                            alert('没有找到缓存的游戏页面');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Cache error:', error);
+                        alert('缓存加载失败');
+                    });
+            } else {
+                alert('浏览器不支持离线功能');
+            }
+        });
+        
+        // 监听网络状态变化
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // 初始化状态
+        updateConnectionStatus();
+        
+        // 自动重试连接
+        let retryCount = 0;
+        const maxRetries = 5;
+        
+        function autoRetry() {
+            if (navigator.onLine) {
+                console.log('Network restored, reloading page');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+                return;
+            }
+            
+            if (retryCount < maxRetries) {
+                retryCount++;
+                console.log(`Retry attempt ${retryCount}/${maxRetries}`);
+                setTimeout(autoRetry, 5000); // 5秒后重试
+            } else {
+                console.log('Max retries reached');
+            }
+        }
+        
+        // 开始自动重试
+        autoRetry();
+    </script>
+</body>
+</html>

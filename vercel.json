@@ -1,0 +1,95 @@
+{
+  "version": 2,
+  "name": "4399-game-world",
+  "public": true,
+  "buildCommand": null,
+  "outputDirectory": "public",
+  "installCommand": null,
+  "framework": "static",
+  
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/ https://fonts.googleapis.com/; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/ https://fonts.googleapis.com/; font-src 'self' https://fonts.gstatic.com/; img-src 'self' data: https://images.unsplash.com/ https://via.placeholder.com/; connect-src 'self'"
+        }
+      ]
+    }
+  ],
+  
+  "routes": [
+    {
+      "src": "/(.*)\\.html",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      }
+    },
+    {
+      "src": "/styles/(.*)\\.css",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/scripts/(.*)\\.js",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/assets/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  
+  "env": {
+    "NODE_ENV": "production"
+  },
+  
+  "regions": ["sfo1", "iad1", "sin1", "fra1", "hnd1", "syd1"],
+  
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 5
+    }
+  },
+  
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "production": true
+    }
+  }
+}

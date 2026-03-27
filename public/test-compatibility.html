@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨平台兼容性测试 - 4399游戏世界</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .test-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .test-title {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .test-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .test-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .test-os .test-icon { color: #FF6B6B; }
+        .test-browser .test-icon { color: #4ECDC4; }
+        .test-device .test-icon { color: #45B7D1; }
+        .test-language .test-icon { color: #96CEB4; }
+        .test-feature .test-icon { color: #DDA0DD; }
+        
+        .test-card h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .test-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .test-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .test-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-supported {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-partial {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-testing {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .test-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        
+        .btn-run-test {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .btn-run-test:hover {
+            transform: translateY(-2px);
+        }
+        
+        .test-results {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .test-results h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .result-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .result-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .result-icon {
+            margin-right: 10px;
+            color: #4ECDC4;
+        }
+        
+        @media (max-width: 768px) {
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-title {
+                font-size: 28px;
+            }
+            
+            .test-actions {
+                flex-direction: column;
+            }
+            
+            .btn-run-test {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1 class="test-title">跨平台兼容性测试</h1>
+            <p class="test-subtitle">检测您的设备和浏览器对4399游戏世界的支持情况</p>
+        </div>
+        
+        <div class="test-grid">
+            <!-- 操作系统测试 -->
+            <div class="test-card test-os">
+                <div class="test-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <h3>操作系统支持</h3>
+                <ul class="test-list">
+                    <li><i class="fas fa-check-circle"></i> Windows 10/11</li>
+                    <li><i class="fas fa-check-circle"></i> macOS</li>
+                    <li><i class="fas fa-check-circle"></i> Linux</li>
+                    <li><i class="fas fa-check-circle"></i> iOS 12+</li>
+                    <li><i class="fas fa-check-circle"></i> Android 8+</li>
+                    <li><i class="fas fa-check-circle"></i> HarmonyOS</li>
+                </ul>
+            </div>
+            
+            <!-- 浏览器测试 -->
+            <div class="test-card test-browser">
+                <div class="test-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>浏览器支持</h3>
+                <ul class="test-list">
+                    <li><i class="fas fa-check-circle"></i> Chrome 90+</li>
+                    <li><i class="fas fa-check-circle"></i> Firefox 88+</li>
+                    <li><i class="fas fa-check-circle"></i> Safari 14+</li>
+                    <li><i class="fas fa-check-circle"></i> Edge 90+</li>
+                    <li><i class="fas fa-check-circle"></i> Opera 76+</li>
+                    <li><i class="fas fa-check-circle"></i> QQ浏览器</li>
+                </ul>
+            </div>
+            
+            <!-- 设备类型测试 -->
+            <div class="test-card test-device">
+                <div class="test-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>设备类型支持</h3>
+                <ul class="test-list">
+                    <li><i class="fas fa-check-circle"></i> 桌面电脑</li>
+                    <li><i class="fas fa-check-circle"></i> 笔记本电脑</li>
+                    <li><i class="fas fa-check-circle"></i> 平板电脑</li>
+                    <li><i class="fas fa-check-circle"></i> 智能手机</li>
+                    <li><i class="fas fa-check-circle"></i> 触摸屏设备</li>
+                    <li><i class="fas fa-check-circle"></i> 高DPI屏幕</li>
+                </ul>
+            </div>
+            
+            <!-- 语言支持测试 -->
+            <div class="test-card test-language">
+                <div class="test-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h3>语言支持</h3>
+                <ul class="test-list">
+                    <li><i class="fas fa-check-circle"></i> 简体中文</li>
+                    <li><i class="fas fa-check-circle"></i> English</li>
+                    <li><i class="fas fa-check-circle"></i> Français</li>
+                    <li><i class="fas fa-check-circle"></i> Deutsch</li>
+                    <li><i class="fas fa-check-circle"></i> 日本語</li>
+                    <li><i class="fas fa-check-circle"></i> العربية</li>
+                </ul>
+            </div>
+            
+            <!-- 功能特性测试 -->
+            <div class="test-card test-feature">
+                <div class="test-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3>功能特性支持</h3>
+                <ul class="test-list">
+                    <li><i class="fas fa-check-circle"></i> PWA安装</li>
+                    <li><i class="fas fa-check-circle"></i> 离线游戏</li>
+                    <li><i class="fas fa-check-circle"></i> 触摸控制</li>
+                    <li><i class="fas fa-check-circle"></i> 键盘控制</li>
+                    <li><i class="fas fa-check-circle"></i> 高分保存</li>
+                    <li><i class="fas fa-check-circle"></i> 云同步</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-actions">
+            <button class="btn-run-test" id="runTestBtn">
+                <i class="fas fa-play"></i> 开始兼容性测试
+            </button>
+            <button class="btn-run-test" id="shareResultsBtn">
+                <i class="fas fa-share-alt"></i> 分享测试结果
+            </button>
+        </div>
+        
+        <div class="test-results" id="testResults" style="display: none;">
+            <h3><i class="fas fa-chart-bar"></i> 您的设备测试结果</h3>
+            <div class="results-grid" id="resultsGrid">
+                <!-- 测试结果将动态生成 -->
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                <h4><i class="fas fa-lightbulb"></i> 优化建议</h4>
+                <div id="optimizationTips">
+                    <!-- 优化建议将动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 测试项目配置
+        const testSuites = {
+            os: {
+                name: '操作系统',
+                tests: [
+                    { id: 'windows', name: 'Windows', pattern: /Win/ },
+                    { id: 'mac', name: 'macOS', pattern: /Mac/ },
+                    { id: 'linux', name: 'Linux', pattern: /Linux/ },
+                    { id: 'ios', name: 'iOS', pattern: /iPhone|iPad|iPod/ },
+                    { id: 'android', name: 'Android', pattern: /Android/ },
+                    { id: 'harmonyos', name: 'HarmonyOS', pattern: /HarmonyOS/ }
+                ]
+            },
+            browser: {
+                name: '浏览器',
+                tests: [
+                    { id: 'chrome', name: 'Chrome', pattern: /Chrome/, minVersion: 90 },
+                    { id: 'firefox', name: 'Firefox', pattern: /Firefox/, minVersion: 88 },
+                    { id: 'safari', name: 'Safari', pattern: /Safari/, minVersion: 14 },
+                    { id: 'edge', name: 'Edge', pattern: /Edg/, minVersion: 90 },
+                    { id: 'opera', name: 'Opera', pattern: /Opera|OPR/, minVersion: 76 },
+                    { id: 'qq', name: 'QQ浏览器', pattern: /QQBrowser/ }
+                ]
+            },
+            device: {
+                name: '设备类型',
+                tests: [
+                    { id: 'desktop', name: '桌面设备', test: () => !/Mobi/.test(navigator.userAgent) },
+                    { id: 'mobile', name: '移动设备', test: () => /Mobi/.test(navigator.userAgent) },
+                    { id: 'tablet', name: '平板设备', test: () => /Tablet|iPad/.test(navigator.userAgent) },
+                    { id: 'touch', name: '触摸设备', test: () => 'ontouchstart' in window },
+                    { id: 'highdpi', name: '高DPI屏幕', test: () => window.devicePixelRatio > 1 },
+                    { id: 'retina', name: 'Retina屏幕', test: () => window.devicePixelRatio >= 2 }
+                ]
+            },
+            features: {
+                name: '功能特性',
+                tests: [
+                    { id: 'localstorage', name: '本地存储', test: () => !!window.localStorage },
+                    { id: 'serviceworker', name: 'Service Worker', test: () => 'serviceWorker' in navigator },
+                    { id: 'webgl', name: 'WebGL支持', test: testWebGL },
+                    { id: 'canvas', name: 'Canvas支持', test: () => !!document.createElement('canvas').getContext },
+                    { id: 'webrtc', name: 'WebRTC支持', test: () => !!window.RTCPeerConnection },
+                    { id: 'geolocation', name: '地理位置', test: () => 'geolocation' in navigator },
+                    { id: 'notifications', name: '通知功能', test: () => 'Notification' in window },
+                    { id: 'vibration', name: '振动功能', test: () => 'vibrate' in navigator }
+                ]
+            },
+            performance: {
+                name: '性能指标',
+                tests: [
+                    { id: 'memory', name: '内存', test: testMemory },
+                    { id: 'cpu', name: 'CPU核心数', test: testCPU },
+                    { id: 'connection', name: '网络连接', test: testConnection },
+                    { id: 'storage', name: '存储空间', test: testStorage },
+                    { id: 'batterystatus', name: '电池状态', test: testBattery }
+                ]
+            }
+        };
+        
+        // 测试功能函数
+        function testWebGL() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && 
+                         (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
+            }
+        }
+        
+        function testMemory() {
+            if (performance.memory) {
+                const limit = performance.memory.jsHeapSizeLimit;
+                return limit > 0 ? '有' : '未知';
+            }
+            return '未知';
+        }
+        
+        function testCPU() {
+            return navigator.hardwareConcurrency || '未知';
+        }
+        
+        function testConnection() {
+            if (navigator.connection) {
+                const conn = navigator.connection;
+                return `${conn.effectiveType || '未知'} (${conn.downlink || '?'} Mbps)`;
+            }
+            return navigator.onLine ? '在线' : '离线';
+        }
+        
+        function testStorage() {
+            if (navigator.storage && navigator.storage.estimate) {
+                return new Promise(resolve => {
+                    navigator.storage.estimate().then(estimate => {
+                        const used = Math.round(estimate.usage / 1024 / 1024);
+                        const total = Math.round(estimate.quota / 1024 / 1024);
+                        resolve(`${used}MB/${total}MB`);
+                    }).catch(() => resolve('未知'));
+                });
+            }
+            return Promise.resolve('未知');
+        }
+        
+        function testBattery() {
+            if ('getBattery' in navigator) {
+                return new Promise(resolve => {
+                    navigator.getBattery().then(battery => {
+                        resolve(`${Math.round(battery.level * 100)}%`);
+                    }).catch(() => resolve('未知'));
+                });
+            }
+            return Promise.resolve('未知');
+        }
+        
+        // 运行测试
+        document.getElementById('runTestBtn').addEventListener('click', async function() {
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 测试中...';
+            btn.disabled = true;
+            
+            const results = [];
+            const userAgent = navigator.userAgent;
+            
+            // 运行所有测试套件
+            for (const [suiteKey, suite] of Object.entries(testSuites)) {
+                const suiteResults = [];
+                
+                for (const test of suite.tests) {
+                    let result = { name: test.name, passed: false, value: null };
+                    
+                    try {
+                        if (test.pattern) {
+                            // 正则匹配测试
+                            result.passed = test.pattern.test(userAgent);
+                            if (test.minVersion && result.passed) {
+                                const versionMatch = userAgent.match(new RegExp(`${test.id}/(\\d+)`, 'i'));
+                                if (versionMatch) {
+                                    const version = parseInt(versionMatch[1]);
+                                    result.passed = version >= test.minVersion;
+                                    result.value = `v${version}`;
+                                }
+                            }
+                        } else if (test.test) {
+                            // 函数测试
+                            const testResult = test.test();
+                            if (testResult instanceof Promise) {
+                                result.value = await testResult;
+                                result.passed = true;
+                            } else if (typeof testResult === 'boolean') {
+                                result.passed = testResult;
+                            } else {
+                                result.passed = true;
+                                result.value = testResult;
+                            }
+                        }
+                    } catch (error) {
+                        console.error(`Test failed: ${test.name}`, error);
+                        result.passed = false;
+                        result.value = '测试失败';
+                    }
+                    
+                    suiteResults.push(result);
+                }
+                
+                results.push({
+                    suite: suite.name,
+                    tests: suiteResults
+                });
+            }
+            
+            // 显示结果
+            displayResults(results);
+            
+            // 恢复按钮状态
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+        
+        // 显示测试结果
+        function displayResults(results) {
+            const resultsGrid = document.getElementById('resultsGrid');
+            const optimizationTips = document.getElementById('optimizationTips');
+            resultsGrid.innerHTML = '';
+            optimizationTips.innerHTML = '';
+            
+            let tips = [];
+            
+            results.forEach(suite => {
+                const suiteElement = document.createElement('div');
+                suiteElement.className = 'result-item';
+                suiteElement.innerHTML = `
+                    <div class="result-name"><i class="fas fa-folder result-icon"></i>${suite.suite}</div>
+                    ${suite.tests.map(test => `
+                        <div class="result-value">
+                            <i class="fas fa-${test.passed ? 'check' : 'times'}-circle" 
+                               style="color: ${test.passed ? '#28a745' : '#dc3545'}; margin-right: 5px;"></i>
+                            ${test.name}: ${test.value || (test.passed ? '支持' : '不支持')}
+                        </div>
+                    `).join('')}
+                `;
+                resultsGrid.appendChild(suiteElement);
+                
+                // 收集优化建议
+                suite.tests.forEach(test => {
+                    if (!test.passed) {
+                        switch(test.name) {
+                            case 'WebGL支持':
+                                tips.push('您的设备不支持WebGL，部分3D游戏可能无法正常运行');
+                                break;
+                            case 'Service Worker':
+                                tips.push('浏览器不支持Service Worker，离线游戏功能将不可用');
+                                break;
+                            case '高DPI屏幕':
+                                tips.push('建议使用高DPI屏幕以获得更好的游戏画质');
+                                break;
+                        }
+                    }
+                });
+            });
+            
+            // 添加通用建议
+            if (!tips.length) {
+                tips.push('您的设备兼容性非常好，所有功能都可以正常使用！');
+            }
+            
+            // 网络优化建议
+            if (!navigator.onLine) {
+                tips.push('您当前处于离线状态，部分需要网络的功能将不可用');
+            }
+            
+            // 移动设备建议
+            if (/Mobi/.test(navigator.userAgent)) {
+                tips.push('检测到移动设备，建议使用Wi-Fi网络以获得更好的游戏体验');
+            }
+            
+            // 显示优化建议
+            optimizationTips.innerHTML = tips.map(tip => 
+                `<p><i class="fas fa-info-circle" style="color: #17a2b8; margin-right: 10px;"></i>${tip}</p>`
+            ).join('');
+            
+            // 显示结果区域
+            document.getElementById('testResults').style.display = 'block';
+            
+            // 滚动到结果区域
+            document.getElementById('testResults').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 分享测试结果
+        document.getElementById('shareResultsBtn').addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '4399游戏世界兼容性测试结果',
+                    text: '我在4399游戏世界进行了设备兼容性测试，结果如下：',
+                    url: window.location.href
+                }).catch(error => {
+                    console.log('分享失败:', error);
+                    alert('分享功能在当前浏览器中不可用');
+                });
+            } else {
+                alert('分享功能需要现代浏览器支持。您可以复制当前URL分享给朋友。\n\n' + window.location.href);
+            }
+        });
+        
+        // 页面加载时显示设备基本信息
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('兼容性测试页面已加载');
+            console.log('User Agent:', navigator.userAgent);
+            console.log('Platform:', navigator.platform);
+            console.log('Language:', navigator.language);
+            console.log('Online:', navigator.onLine);
+        });
+    </script>
+</body>
+</html>

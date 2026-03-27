@@ -1,0 +1,118 @@
+{
+  "name": "4399游戏世界",
+  "short_name": "4399Games",
+  "description": "免费在线小游戏平台，支持多语言和跨设备访问",
+  "lang": "zh-CN",
+  "dir": "auto",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#FF6B6B",
+  "background_color": "#f8f9fa",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "/assets/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "桌面版界面"
+    },
+    {
+      "src": "/assets/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "手机版界面"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "热门游戏",
+      "short_name": "热门",
+      "description": "查看热门游戏",
+      "url": "/#hot-games",
+      "icons": [{ "src": "/assets/icon-hot.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "游戏分类",
+      "short_name": "分类",
+      "description": "浏览游戏分类",
+      "url": "/#categories",
+      "icons": [{ "src": "/assets/icon-category.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "排行榜",
+      "short_name": "排行",
+      "description": "查看游戏排行榜",
+      "url": "/#rankings",
+      "icons": [{ "src": "/assets/icon-ranking.png", "sizes": "96x96" }]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  
+  "iarc_rating_id": "e40b08c4-1db6-45a7-8077-8f8f8f8f8f8f",
+  
+  "launch_handler": {
+    "client_mode": "auto"
+  },
+  
+  "protocol_handlers": [
+    {
+      "protocol": "web+game4399",
+      "url": "/?url=%s"
+    }
+  ]
+}

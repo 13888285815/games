@@ -79,6 +79,94 @@ body {
 .user-actions {
     display: flex;
     gap: 15px;
+    align-items: center;
+}
+
+/* 语言选择器 */
+.language-selector {
+    margin-right: 10px;
+}
+
+/* 分享按钮 */
+.btn-share {
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.btn-share:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(15deg);
+}
+
+/* 阿拉伯语（RTL）支持 */
+[dir="rtl"] .language-selector {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+[dir="rtl"] .logo h1,
+[dir="rtl"] .nav-menu {
+    text-align: right;
+}
+
+[dir="rtl"] .search-bar {
+    margin-left: 30px;
+    margin-right: 0;
+}
+
+[dir="rtl"] .btn-share {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.language-selector select {
+    padding: 8px 12px;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s;
+}
+
+.language-selector select:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.language-selector select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* 阿拉伯语（RTL）支持 */
+[dir="rtl"] .language-selector {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+[dir="rtl"] .logo h1,
+[dir="rtl"] .nav-menu {
+    text-align: right;
+}
+
+[dir="rtl"] .search-bar {
+    margin-left: 30px;
+    margin-right: 0;
 }
 
 .btn-login, .btn-register {
@@ -735,5 +823,219 @@ body {
     
     .logo .tagline {
         font-size: 12px;
+    }
+    
+    .user-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .language-selector {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .language-selector select {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* 平板设备优化 */
+@media (min-width: 481px) and (max-width: 768px) {
+    .games-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .user-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* 笔记本电脑/桌面优化 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .games-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .categories-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 大屏幕优化 */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    .container {
+        max-width: 1100px;
+    }
+}
+
+/* 超大屏幕优化 */
+@media (min-width: 1441px) {
+    .container {
+        max-width: 1400px;
+    }
+    
+    .games-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 25px;
+    }
+    
+    .categories-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 25px;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .btn-play, .btn-login, .btn-register, .category-card, .game-card {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .search-bar input, .search-bar button {
+        min-height: 44px;
+    }
+    
+    .game-controls button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .nav-menu a {
+        padding: 12px 16px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* 暗色模式支持 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    
+    .header {
+        background: linear-gradient(135deg, #d84315 0%, #00695c 100%);
+    }
+    
+    .main-nav {
+        background: #1e1e1e;
+    }
+    
+    .carousel-slide {
+        background: #2d2d2d;
+    }
+    
+    .games-grid, .categories-grid {
+        background: transparent;
+    }
+    
+    .game-card, .category-card, .ranking-table {
+        background: #2d2d2d;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .game-card h3, .category-card h3, .ranking-table th {
+        color: #e0e0e0;
+    }
+    
+    .game-card p, .category-card p, .ranking-table td {
+        color: #aaa;
+    }
+    
+    .footer {
+        background: #1e1e1e;
+    }
+}
+
+/* 打印样式优化 */
+@media print {
+    .header, .main-nav, .footer, .user-actions, .search-bar, .carousel-controls {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+        font-size: 12pt;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .games-grid, .categories-grid {
+        break-inside: avoid;
+    }
+}
+
+/* 字体和文本优化 */
+body {
+    font-family: 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans Arabic', 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* 阿拉伯语字体优化 */
+[lang="ar-SA"] body {
+    font-family: 'Noto Sans Arabic', 'Tahoma', 'Arial', sans-serif;
+}
+
+/* 日语字体优化 */
+[lang="ja-JP"] body {
+    font-family: 'Noto Sans JP', 'Meiryo', 'MS PGothic', 'Arial', sans-serif;
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+    .btn-play, .btn-login, .btn-register {
+        border-width: 3px;
+    }
+    
+    .game-card, .category-card {
+        border: 2px solid #000;
+    }
+    
+    .search-bar input {
+        border: 2px solid #000;
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .game-card, .category-card {
+        transition: none !important;
+    }
+}
+
+/* 视觉障碍友好 */
+@media (prefers-reduced-data: reduce) {
+    .carousel-slide img {
+        content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400"><rect width="1200" height="400" fill="%23f0f0f0"/></svg>');
+    }
+    
+    .game-card img, .category-card i {
+        opacity: 0.5;
     }
 }
