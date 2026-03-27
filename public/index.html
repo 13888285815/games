@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4399游戏世界 - 免费在线小游戏大全</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><i class="fas fa-gamepad"></i> 4399游戏世界</h1>
+                <p class="tagline">免费在线小游戏大全 - 我的游戏，我做主！</p>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="搜索游戏...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="user-actions">
+                <button class="btn-login"><i class="fas fa-user"></i> 登录</button>
+                <button class="btn-register"><i class="fas fa-user-plus"></i> 注册</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主导航菜单 -->
+    <nav class="main-nav">
+        <div class="container">
+            <ul class="nav-menu">
+                <li class="active"><a href="#"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="#"><i class="fas fa-fire"></i> 热门游戏</a></li>
+                <li><a href="#"><i class="fas fa-trophy"></i> 排行榜</a></li>
+                <li><a href="#"><i class="fas fa-puzzle-piece"></i> 益智</a></li>
+                <li><a href="#"><i class="fas fa-running"></i> 动作</a></li>
+                <li><a href="#"><i class="fas fa-crosshairs"></i> 射击</a></li>
+                <li><a href="#"><i class="fas fa-car"></i> 赛车</a></li>
+                <li><a href="#"><i class="fas fa-magic"></i> 休闲</a></li>
+                <li><a href="#"><i class="fas fa-futbol"></i> 体育</a></li>
+                <li><a href="#"><i class="fas fa-chess"></i> 棋牌</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 轮播图 -->
+            <section class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide active">
+                        <img src="https://via.placeholder.com/1200x400/FF6B6B/ffffff?text=热门游戏推荐" alt="热门游戏">
+                        <div class="carousel-caption">
+                            <h2>黄金矿工</h2>
+                            <p>经典挖矿游戏，挑战你的反应速度！</p>
+                            <button class="btn-play">立即游玩</button>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://via.placeholder.com/1200x400/4ECDC4/ffffff?text=森林冰火人" alt="森林冰火人">
+                        <div class="carousel-caption">
+                            <h2>森林冰火人</h2>
+                            <p>双人合作闯关，体验默契配合！</p>
+                            <button class="btn-play">立即游玩</button>
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 热门游戏推荐 -->
+            <section class="section-hot">
+                <h2 class="section-title"><i class="fas fa-fire"></i> 热门游戏推荐</h2>
+                <div class="games-grid" id="hotGames">
+                    <!-- 热门游戏将通过JavaScript动态加载 -->
+                </div>
+            </section>
+
+            <!-- 游戏分类展示 -->
+            <section class="section-categories">
+                <h2 class="section-title"><i class="fas fa-th-large"></i> 游戏分类</h2>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="action">
+                        <i class="fas fa-running"></i>
+                        <h3>动作游戏</h3>
+                        <p>格斗、跑酷、冒险</p>
+                    </div>
+                    <div class="category-card" data-category="puzzle">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <h3>益智游戏</h3>
+                        <p>解谜、拼图、策略</p>
+                    </div>
+                    <div class="category-card" data-category="shooting">
+                        <i class="fas fa-crosshairs"></i>
+                        <h3>射击游戏</h3>
+                        <p>FPS、射击、枪战</p>
+                    </div>
+                    <div class="category-card" data-category="racing">
+                        <i class="fas fa-car"></i>
+                        <h3>赛车游戏</h3>
+                        <p>竞速、驾驶、漂移</p>
+                    </div>
+                    <div class="category-card" data-category="casual">
+                        <i class="fas fa-magic"></i>
+                        <h3>休闲游戏</h3>
+                        <p>轻松、简单、趣味</p>
+                    </div>
+                    <div class="category-card" data-category="sports">
+                        <i class="fas fa-futbol"></i>
+                        <h3>体育游戏</h3>
+                        <p>足球、篮球、网球</p>
+                    </div>
+                    <div class="category-card" data-category="board">
+                        <i class="fas fa-chess"></i>
+                        <h3>棋牌游戏</h3>
+                        <p>扑克、麻将、象棋</p>
+                    </div>
+                    <div class="category-card" data-category="strategy">
+                        <i class="fas fa-chess-board"></i>
+                        <h3>策略游戏</h3>
+                        <p>塔防、模拟、经营</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 最新游戏 -->
+            <section class="section-new">
+                <h2 class="section-title"><i class="fas fa-star"></i> 最新游戏</h2>
+                <div class="games-grid" id="newGames">
+                    <!-- 最新游戏将通过JavaScript动态加载 -->
+                </div>
+            </section>
+
+            <!-- 游戏排行榜 -->
+            <section class="section-ranking">
+                <h2 class="section-title"><i class="fas fa-trophy"></i> 游戏排行榜</h2>
+                <div class="ranking-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>游戏名称</th>
+                                <th>类别</th>
+                                <th>今日游玩</th>
+                                <th>总游玩</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingBody">
+                            <!-- 排行榜将通过JavaScript动态加载 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 游戏详情弹窗 -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <div class="modal-body">
+                <div class="game-detail">
+                    <div class="game-header">
+                        <img id="modalGameImg" src="" alt="游戏图片">
+                        <div class="game-info">
+                            <h2 id="modalGameTitle"></h2>
+                            <div class="game-meta">
+                                <span class="game-category" id="modalGameCategory"></span>
+                                <span class="game-players" id="modalGamePlayers"></span>
+                                <div class="game-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span id="modalGameRating"></span>
+                                </div>
+                            </div>
+                            <p id="modalGameDescription"></p>
+                            <div class="game-actions">
+                                <button class="btn-play-large" id="playGameBtn"><i class="fas fa-play"></i> 立即游玩</button>
+                                <button class="btn-favorite"><i class="far fa-heart"></i> 收藏</button>
+                                <button class="btn-share"><i class="fas fa-share-alt"></i> 分享</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-play-area" id="gamePlayArea">
+                        <div class="game-container" id="gameContainer">
+                            <!-- 游戏将通过JavaScript加载 -->
+                            <div class="game-placeholder">
+                                <i class="fas fa-gamepad"></i>
+                                <h3>游戏加载中...</h3>
+                                <p>请稍候，游戏即将开始</p>
+                            </div>
+                        </div>
+                        <div class="game-controls">
+                            <button class="btn-fullscreen"><i class="fas fa-expand"></i> 全屏</button>
+                            <button class="btn-restart"><i class="fas fa-redo"></i> 重新开始</button>
+                            <button class="btn-sound"><i class="fas fa-volume-up"></i> 音效</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部信息 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>4399游戏世界是一个提供免费在线小游戏的平台，致力于为玩家提供最优质的游戏体验。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p>邮箱: support@game4399.com</p>
+                    <p>电话: 400-123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h3>友情链接</h3>
+                    <ul>
+                        <li><a href="#">7k7k小游戏</a></li>
+                        <li><a href="#">2144小游戏</a></li>
+                        <li><a href="#">3366小游戏</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 4399游戏世界 版权所有 | 闽ICP备12345678号</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/games.js"></script>
+</body>
+</html>

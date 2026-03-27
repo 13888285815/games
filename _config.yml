@@ -1,0 +1,52 @@
+# GitHub Pages 配置
+title: "4399游戏世界"
+description: "免费在线小游戏大全 - 类似4399.com的游戏网站"
+baseurl: "/games"
+url: "https://13888285815.github.io"
+
+# 主题设置
+theme: jekyll-theme-cayman
+
+# 构建设置
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# 插件
+plugins:
+  - jekyll-feed
+
+# 排除文件
+exclude:
+  - README.md
+  - package.json
+  - package-lock.json
+  - node_modules
+  - .gitignore
+  - .github
+  - .vscode
+
+# 包含文件
+include:
+  - _posts
+  - _pages
+
+# 默认设置
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# 网站信息
+github_username: "13888285815"
+email: "support@game4399.com"
+twitter_username: ""
+linkedin_username: ""
+
+# 社交链接
+social:
+  name: "4399游戏世界"
+  links:
+    - https://github.com/13888285815/games

@@ -1,0 +1,29 @@
+{
+  "name": "game4399",
+  "version": "1.0.0",
+  "description": "类似4399.com的在线游戏网站，提供各种HTML5小游戏",
+  "main": "public/index.html",
+  "scripts": {
+    "start": "npx serve public",
+    "dev": "npx live-server public",
+    "deploy": "gh-pages -d public"
+  },
+  "keywords": [
+    "4399",
+    "games",
+    "html5-games",
+    "online-games",
+    "snake",
+    "tetris"
+  ],
+  "author": "WorkBuddy Assistant",
+  "license": "MIT",
+  "homepage": "https://13888285815.github.io/games/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/13888285815/games.git"
+  },
+  "bugs": {
+    "url": "https://github.com/13888285815/games/issues"
+  }
+}
