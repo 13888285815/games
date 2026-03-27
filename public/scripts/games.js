@@ -86,6 +86,16 @@ const extendedGameData = {
             rating: '4.1',
             image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
             gameUrl: 'games/word-search.html'
+        },
+        {
+            id: 'memory-match',
+            title: '记忆匹配',
+            category: 'puzzle',
+            description: '记忆力测试游戏！翻开卡片找到相同的图案，挑战你的记忆力和观察力。',
+            players: '567,890',
+            rating: '4.6',
+            image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+            gameUrl: 'games/memory-match.html'
         }
     ],
     
