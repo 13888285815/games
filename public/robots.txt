@@ -1,0 +1,142 @@
+# Robots.txt for IdeaTech Game World
+# Generated: 2026-03-28
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /test/
+Disallow: /temp/
+Disallow: /cgi-bin/
+
+# Crawl delay for all robots
+Crawl-delay: 2
+
+# Specific robot rules
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 1
+
+User-agent: Googlebot-Mobile
+Allow: /
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 2
+
+User-agent: Slurp (Yahoo!)
+Allow: /
+Disallow: /admin/
+Crawl-delay: 5
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin/
+Crawl-delay: 3
+
+User-agent: YandexBot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Applebot
+Allow: /
+Crawl-delay: 2
+
+User-agent: FacebookExternalHit
+Allow: /
+Crawl-delay: 5
+
+# Block specific robots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+# Sitemap location
+Sitemap: https://13888285815.github.io/games/sitemap.xml
+Sitemap: https://ideatech-game-world.vercel.app/sitemap.xml
+
+# Host directive
+Host: 13888285815.github.io
+
+# Language versions (hreflang support)
+# zh-CN: https://13888285815.github.io/games/?lang=zh-CN
+# en-US: https://13888285815.github.io/games/?lang=en-US
+# fr-FR: https://13888285815.github.io/games/?lang=fr-FR
+# de-DE: https://13888285815.github.io/games/?lang=de-DE
+# ja-JP: https://13888285815.github.io/games/?lang=ja-JP
+# ar-SA: https://13888285815.github.io/games/?lang=ar-SA
+
+# Clean-param directive for language parameters
+Clean-param: lang /games/
+
+# Game-specific rules
+Allow: /games/snake.html
+Allow: /games/tetris.html
+Allow: /games/gold-miner.html
+Allow: /games/fireboy-watergirl.html
+Allow: /games/memory-match.html
+
+# Resource files
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+Allow: *.ico
+Allow: *.woff
+Allow: *.woff2
+Allow: *.ttf
+Allow: *.eot
+
+# Important pages priority
+Allow: /index.html
+Allow: /subscription.html
+Allow: /ai-demo.html
+Allow: /test-game.html
+Allow: /test-compatibility.html
+
+# Game assets
+Allow: /assets/
+Allow: /scripts/
+Allow: /styles/
+Allow: /games/
+
+# Service worker and PWA
+Allow: /service-worker.js
+Allow: /manifest.json
+Allow: /offline.html
+
+# Analytics and tracking (if any)
+Allow: /analytics/
+
+# API endpoints
+Allow: /api/v1/
+Disallow: /api/admin/
+
+# Ads (if any)
+Allow: /ads.txt
+Allow: /ads/
+
+# Copyright
+# © 2026 IdeaTech Game World. All rights reserved.

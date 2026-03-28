@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试游戏 - 意念科技游戏世界</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #FF6B6B;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .game-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,107,107,0.3);
+        }
+        .nav {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .nav a {
+            margin: 0 10px;
+            color: #4ECDC4;
+            text-decoration: none;
+        }
+        .success {
+            color: #4ECDC4;
+            font-weight: bold;
+        }
+        .error {
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 测试页面 - 意念科技游戏世界</h1>
+        
+        <div class="game-info">
+            <h2>📋 系统状态检查</h2>
+            <div id="status"></div>
+        </div>
+        
+        <div class="game-info">
+            <h2>🔗 快速链接</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <a href="index.html" class="btn">🏠 返回主页</a>
+                <a href="subscription.html" class="btn">💰 订阅管理</a>
+                <a href="ai-demo.html" class="btn">🤖 AI演示</a>
+                <a href="http://localhost:8081/" class="btn">🚀 本地服务器</a>
+                <a href="https://13888285815.github.io/games/" class="btn">🌐 GitHub Pages</a>
+            </div>
+        </div>
+        
+        <div class="game-info">
+            <h2>🎯 核心功能测试</h2>
+            <div id="testResults"></div>
+        </div>
+        
+        <div class="nav">
+            <a href="index.html">🏠 主页</a> | 
+            <a href="subscription.html">💰 订阅</a> | 
+            <a href="ai-demo.html">🤖 AI功能</a> | 
+            <a href="games/gold-miner.html">⛏️ 黄金矿工</a>
+        </div>
+    </div>
+    
+    <script>
+        // 系统状态检查
+        function checkSystem() {
+            const statusEl = document.getElementById('status');
+            const testResultsEl = document.getElementById('testResults');
+            let statusHTML = '';
+            let testHTML = '';
+            
+            // 检查基本功能
+            const tests = [
+                { name: 'JavaScript支持', test: () => true },
+                { name: 'CSS样式加载', test: () => window.getComputedStyle(document.body).display !== '' },
+                { name: 'HTML5支持', test: () => !!document.createElement('canvas').getContext },
+                { name: '本地存储', test: () => !!window.localStorage },
+                { name: 'Service Worker', test: () => 'serviceWorker' in navigator }
+            ];
+            
+            tests.forEach(test => {
+                try {
+                    const result = test.test();
+                    statusHTML += `<div>${test.name}: <span class="${result ? 'success' : 'error'}">${result ? '✅ 正常' : '❌ 异常'}</span></div>`;
+                } catch (e) {
+                    statusHTML += `<div>${test.name}: <span class="error">❌ 错误: ${e.message}</span></div>`;
+                }
+            });
+            
+            // 测试游戏功能
+            const gameTests = [
+                { name: '贪吃蛇游戏', url: 'games/snake.html' },
+                { name: '俄罗斯方块', url: 'games/tetris.html' },
+                { name: '黄金矿工', url: 'games/gold-miner.html' },
+                { name: '森林冰火人', url: 'games/fireboy-watergirl.html' }
+            ];
+            
+            gameTests.forEach(test => {
+                testHTML += `<div><strong>${test.name}</strong>: <a href="${test.url}" class="btn" style="font-size: 14px; padding: 8px 16px;">测试游戏</a></div>`;
+            });
+            
+            statusEl.innerHTML = statusHTML;
+            testResultsEl.innerHTML = testHTML;
+        }
+        
+        // 页面加载完成后执行检查
+        document.addEventListener('DOMContentLoaded', checkSystem);
+    </script>
+</body>
+</html>

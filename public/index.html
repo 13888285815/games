@@ -293,10 +293,94 @@
     
     <!-- 主脚本 -->
     <script src="scripts/main.js"></script>
-    <script src="scripts/games.js"></script>
+    <!-- <script src="scripts/games.js"></script> -->
+    <!-- 修复：如果main.js中缺少gameData，使用这个简单的数据 -->
+    <script>
+        if (typeof gameData === 'undefined') {
+            console.log('加载备用游戏数据...');
+            var gameData = {
+                categories: {
+                    action: { name: '动作游戏', icon: 'fa-running', color: '#FF6B6B' },
+                    puzzle: { name: '益智游戏', icon: 'fa-puzzle-piece', color: '#4ECDC4' },
+                    shooting: { name: '射击游戏', icon: 'fa-crosshairs', color: '#45B7D1' },
+                    racing: { name: '赛车游戏', icon: 'fa-car', color: '#96CEB4' },
+                    casual: { name: '休闲游戏', icon: 'fa-magic', color: '#FFEAA7' },
+                    sports: { name: '体育游戏', icon: 'fa-futbol', color: '#DDA0DD' },
+                    board: { name: '棋牌游戏', icon: 'fa-chess', color: '#98D8C8' },
+                    strategy: { name: '策略游戏', icon: 'fa-chess-board', color: '#F7DC6F' }
+                },
+                games: [
+                    {
+                        id: 'gold-miner',
+                        title: '黄金矿工',
+                        category: 'action',
+                        description: '经典挖矿游戏，在有限时间内挖到足够的金子！',
+                        players: '1,234,567',
+                        rating: '4.8',
+                        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        gameUrl: 'games/gold-miner.html'
+                    },
+                    {
+                        id: 'fireboy-watergirl',
+                        title: '森林冰火人',
+                        category: 'action',
+                        description: '双人合作闯关游戏！控制火男孩和冰女孩穿越森林神殿。',
+                        players: '987,654',
+                        rating: '4.9',
+                        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        gameUrl: 'games/fireboy-watergirl.html'
+                    },
+                    {
+                        id: 'snake',
+                        title: '贪吃蛇',
+                        category: 'casual',
+                        description: '经典贪吃蛇游戏！控制蛇吃掉食物变得越来越长。',
+                        players: '2,345,678',
+                        rating: '4.7',
+                        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        gameUrl: 'games/snake.html'
+                    },
+                    {
+                        id: 'tetris',
+                        title: '俄罗斯方块',
+                        category: 'puzzle',
+                        description: '经典益智游戏！移动、旋转和落下各种方块。',
+                        players: '1,876,543',
+                        rating: '4.6',
+                        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        gameUrl: 'games/tetris.html'
+                    },
+                    {
+                        id: 'memory-match',
+                        title: '记忆匹配',
+                        category: 'puzzle',
+                        description: '翻开卡片找到相同的图案，测试记忆力和观察力。',
+                        players: '876,543',
+                        rating: '4.5',
+                        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        gameUrl: 'games/memory-match.html'
+                    },
+                    {
+                        id: 'car-racing',
+                        title: '极品飞车',
+                        category: 'racing',
+                        description: '刺激的赛车游戏！选择你的爱车，在不同赛道上漂移。',
+                        players: '765,432',
+                        rating: '4.4',
+                        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        gameUrl: 'games/car-racing.html'
+                    }
+                ]
+            };
+        }
+    </script>
     
     <!-- 社交分享支持 -->
     <script src="scripts/social.js"></script>
+    
+    <!-- 访客分析和欢迎引导 -->
+    <script src="scripts/analytics.js"></script>
+    <script src="scripts/welcome-guide.js"></script>
     
     <!-- Service Worker注册 -->
     <script>

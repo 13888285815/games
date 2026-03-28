@@ -99,21 +99,38 @@ const gameData = {
 
 // DOM加载完成后初始化
 document.addEventListener('DOMContentLoaded', function() {
-    // 初始化游戏数据
-    loadGames();
-    loadRanking();
+    console.log('DOM加载完成，开始初始化...');
     
-    // 轮播图控制
-    initCarousel();
-    
-    // 事件监听
-    setupEventListeners();
-    
-    // 搜索功能
-    setupSearch();
-    
-    // 分类点击事件
-    setupCategoryClick();
+    try {
+        // 初始化游戏数据
+        loadGames();
+        loadRanking();
+        
+        // 轮播图控制
+        initCarousel();
+        
+        // 事件监听
+        setupEventListeners();
+        
+        // 搜索功能
+        setupSearch();
+        
+        // 分类点击事件
+        setupCategoryClick();
+        
+        console.log('初始化完成，共加载' + gameData.games.length + '款游戏');
+    } catch (error) {
+        console.error('初始化失败:', error);
+        // 显示用户友好提示
+        const errorContainer = document.createElement('div');
+        errorContainer.style.cssText = 'background: #FF6B6B; color: white; padding: 20px; margin: 20px; border-radius: 10px;';
+        errorContainer.innerHTML = `
+            <h3>页面加载遇到问题</h3>
+            <p>错误: ${error.message}</p>
+            <p>请尝试刷新页面或检查浏览器控制台获取更多信息。</p>
+        `;
+        document.body.prepend(errorContainer);
+    }
 });
 
 // 加载游戏到页面
